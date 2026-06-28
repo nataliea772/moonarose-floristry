@@ -1,0 +1,64 @@
+"use client";
+
+import { ProductCard } from "@/components/customer/ProductCard";
+import { type CustomerProduct } from "@/components/customer/types";
+import { type ProductReview } from "@/lib/reviews";
+import { getTranslations, type Language } from "@/lib/translations";
+
+type CustomerTranslations = ReturnType<typeof getTranslations>;
+
+type ProductGridProps = {
+  isLoading: boolean;
+  loadError: string;
+  products: CustomerProduct[];
+  language: Language;
+  translations: CustomerTranslations;
+  reviewsByProductId: Map<string, ProductReview[]>;
+  onOpenGallery: (product: CustomerProduct, index?: number) => void;
+  onOpenOrder: (product: CustomerProduct) => void;
+};
+
+export function ProductGrid({
+  isLoading,
+  loadError,
+  products,
+  language,
+  translations: t,
+  reviewsByProductId,
+  onOpenGallery,
+  onOpenOrder,
+}: ProductGridProps) {
+  return (
+    <section className="products-section">
+      {isLoading ? (
+        <p className="text-center text-lg text-[#755d56]">
+          {t.loadingCollection}
+        </p>
+      ) : (
+        <>
+          {loadError && (
+            <p className="mb-6 text-center text-lg text-[#9f5f5f]">{loadError}</p>
+          )}
+
+          {products.length === 0 ? (
+            <p className="text-center text-lg text-[#755d56]">{t.noProducts}</p>
+          ) : (
+            <div className="product-grid">
+              {products.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  language={language}
+                  translations={t}
+                  reviews={reviewsByProductId.get(product.id) ?? []}
+                  onOpenGallery={onOpenGallery}
+                  onOpenOrder={onOpenOrder}
+                />
+              ))}
+            </div>
+          )}
+        </>
+      )}
+    </section>
+  );
+}
