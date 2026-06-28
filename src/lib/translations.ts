@@ -21,6 +21,7 @@ const categoryLabels: Record<Language, Record<ProductCategory, string>> = {
     "קישוט רכב": "קישוט רכב",
     חתונות: "חתונות",
     הפקות: "הפקות",
+    מתנות: "מתנות",
     "אירועים פרטיים": "אירועים פרטיים",
   },
   ar: {
@@ -29,6 +30,7 @@ const categoryLabels: Record<Language, Record<ProductCategory, string>> = {
     "קישוט רכב": "تزيين سيارات",
     חתונות: "أعراس",
     הפקות: "تنسيقات ومناسبات",
+    מתנות: "هدايا",
     "אירועים פרטיים": "مناسبات خاصة",
   },
   en: {
@@ -37,6 +39,7 @@ const categoryLabels: Record<Language, Record<ProductCategory, string>> = {
     "קישוט רכב": "Car Decoration",
     חתונות: "Weddings",
     הפקות: "Events",
+    מתנות: "Gifts",
     "אירועים פרטיים": "Private Events",
   },
 };
@@ -51,6 +54,7 @@ const categoryDescriptions: Record<
     "קישוט רכב": "קישוט פרחים לרכב ליום המיוחד",
     חתונות: "פרחים לחתונה ולכל שלבי האירוע",
     הפקות: "עיצוב פרחים להפקות, צילומים ואירועים",
+    מתנות: "מתנות פרחים מוקפדות לכל אירוע",
     "אירועים פרטיים": "פרחים לאירועים אינטימיים ורגעים אישיים",
   },
   ar: {
@@ -59,6 +63,7 @@ const categoryDescriptions: Record<
     "קישוט רכב": "تزيين زهور للسيارة في يومك المميز",
     חתונות: "زهور للزفاف وكل مراحل الاحتفال",
     הפקות: "تنسيقات زهرية للإنتاج والتصوير والفعاليات",
+    מתנות: "هدايا زهرية لكل مناسبة",
     "אירועים פרטיים": "زهور للمناسبات الخاصة واللحظات الشخصية",
   },
   en: {
@@ -67,6 +72,7 @@ const categoryDescriptions: Record<
     "קישוט רכב": "Floral car styling for your big day",
     חתונות: "Flowers for weddings and every celebration stage",
     הפקות: "Floral design for productions, shoots, and events",
+    מתנות: "Refined floral gifts for every occasion",
     "אירועים פרטיים": "Flowers for intimate events and personal moments",
   },
 };
@@ -117,6 +123,7 @@ export const translations = {
     loadError: "לא הצלחנו לטעון את הנתונים כרגע",
     noProducts: "מוצרים יתווספו בקרוב",
     chooseCategoryPrompt: "בחרי קטגוריה כדי לראות את הפריטים",
+    noProductsInCategory: "עדיין אין פריטים בקטגוריה הזו",
     subcategoryAll: "הכל",
     orderButton: "להזמנה",
     noRatingsYet: "עדיין אין דירוגים",
@@ -166,6 +173,7 @@ export const translations = {
     loadError: "لم نتمكن من تحميل البيانات حالياً",
     noProducts: "سيتم إضافة منتجات قريباً",
     chooseCategoryPrompt: "اختاري فئة لعرض المنتجات",
+    noProductsInCategory: "لا توجد منتجات في هذه الفئة بعد",
     subcategoryAll: "الكل",
     orderButton: "للطلب",
     noRatingsYet: "لا توجد تقييمات بعد",
@@ -216,6 +224,7 @@ export const translations = {
     loadError: "We couldn't load the data right now",
     noProducts: "Products coming soon",
     chooseCategoryPrompt: "Choose a category to view the pieces",
+    noProductsInCategory: "No pieces in this category yet",
     subcategoryAll: "All",
     orderButton: "Order",
     noRatingsYet: "No ratings yet",

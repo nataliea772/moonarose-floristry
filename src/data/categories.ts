@@ -4,6 +4,7 @@ export type ProductCategory =
   | "קישוט רכב"
   | "חתונות"
   | "הפקות"
+  | "מתנות"
   | "אירועים פרטיים";
 
 export type WeddingSubcategory =
@@ -27,6 +28,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
   "קישוט רכב",
   "חתונות",
   "הפקות",
+  "מתנות",
   "אירועים פרטיים",
 ];
 

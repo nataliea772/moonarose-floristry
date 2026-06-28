@@ -54,9 +54,7 @@ export function ProductGrid({
           )}
 
           {products.length === 0 ? (
-            <p className="text-center text-base text-[#755d56] sm:text-lg">
-              {t.noProducts}
-            </p>
+            <p className="choose-category-prompt">{t.noProductsInCategory}</p>
           ) : (
             <div className="product-grid">
               {products.map((product) => (

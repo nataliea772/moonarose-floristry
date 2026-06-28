@@ -2,13 +2,12 @@ import {
   products as defaultProducts,
   type ProductCategory,
 } from "@/data/products";
-import { normalizeProductSubcategory } from "@/data/categories";
+import { PRODUCT_CATEGORIES, normalizeProductSubcategory } from "@/data/categories";
 import {
   resolveProductImageUrls,
   type ProductImageRecord,
 } from "@/lib/productImages";
 import { mapProductTranslationFields } from "@/lib/productTranslations";
-import { productCategories } from "@/lib/translations";
 import { type ProductReview } from "@/lib/reviews";
 import { type CustomerProduct } from "@/components/customer/types";
 
@@ -55,10 +54,8 @@ export type SupabaseReviewRow = {
   created_at: string;
 };
 
-const productCategoriesList = productCategories;
-
 export function isProductCategory(value: string): value is ProductCategory {
-  return productCategoriesList.includes(value as ProductCategory);
+  return PRODUCT_CATEGORIES.includes(value as ProductCategory);
 }
 
 export function mapSupabaseReview(row: SupabaseReviewRow): ProductReview {
@@ -164,4 +161,4 @@ export function parseDateFromKey(dateKey: string): Date | null {
   return new Date(year, month - 1, day);
 }
 
-export { productCategories as productCategoriesList };
+export { PRODUCT_CATEGORIES as productCategoriesList };

@@ -1,12 +1,14 @@
 "use client";
 
-import { type ProductCategory } from "@/data/categories";
+import {
+  PRODUCT_CATEGORIES,
+  type ProductCategory,
+} from "@/data/categories";
 import {
   getCategoryDescription,
   getCategoryLabel,
   type Language,
 } from "@/lib/translations";
-import { productCategoriesList } from "@/components/customer/utils";
 
 type CategorySelectorProps = {
   selectedCategory: ProductCategory | null;
@@ -20,8 +22,11 @@ export function CategorySelector({
   onSelectCategory,
 }: CategorySelectorProps) {
   return (
-    <section className="category-selector category-grid mb-5 sm:mb-16">
-      {productCategoriesList.map((category) => {
+    <section
+      className="category-selector category-grid mb-5 sm:mb-16"
+      aria-label="Categories"
+    >
+      {PRODUCT_CATEGORIES.map((category) => {
         const isSelected = selectedCategory === category;
 
         return (
