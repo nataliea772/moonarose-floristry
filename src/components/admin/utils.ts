@@ -13,6 +13,7 @@ import {
 import { mapProductTranslationFields } from "@/lib/productTranslations";
 import {
   ORDER_STATUSES,
+  ORDER_STATUS_LABELS,
   productCategories,
 } from "@/components/admin/constants";
 import {
@@ -416,6 +417,108 @@ export function groupOrdersByRequestedDate(
   }
 
   return grouped;
+}
+
+function escapeCsvField(value: string | number): string {
+  const text = String(value ?? "");
+
+  if (/[",\n\r]/.test(text)) {
+    return `"${text.replace(/"/g, '""')}"`;
+  }
+
+  return text;
+}
+
+function getOrderPrice(order: AdminOrder): number {
+  return Number.isFinite(order.productPrice) ? order.productPrice : 0;
+}
+
+export function getCurrentMonthKey(): string {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  return `${now.getFullYear()}-${month}`;
+}
+
+export function filterCompletedOrdersByRequestedMonth(
+  orders: AdminOrder[],
+  monthKey: string
+): AdminOrder[] {
+  return orders.filter(
+    (order) =>
+      order.status === "completed" && order.requestedDate.startsWith(monthKey)
+  );
+}
+
+export function buildCompletedOrdersCsv(orders: AdminOrder[]): string {
+  const headers = [
+    "מספר הזמנה",
+    "תאריך יצירה",
+    "תאריך מבוקש",
+    "שם לקוחה",
+    "טלפון",
+    "מוצר",
+    "מחיר",
+    "סטטוס",
+    "הערות",
+  ];
+
+  const sortedOrders = [...orders].sort((left, right) => {
+    const requestedDateCompare = left.requestedDate.localeCompare(
+      right.requestedDate
+    );
+
+    if (requestedDateCompare !== 0) {
+      return requestedDateCompare;
+    }
+
+    return left.createdAt.localeCompare(right.createdAt);
+  });
+
+  const rows = sortedOrders.map((order) =>
+    [
+      order.id,
+      formatOrderTimestamp(order.createdAt),
+      formatOrderDate(order.requestedDate),
+      order.customerName,
+      order.customerPhone,
+      order.productName,
+      getOrderPrice(order),
+      ORDER_STATUS_LABELS[order.status],
+      order.notes ?? "",
+    ]
+      .map(escapeCsvField)
+      .join(",")
+  );
+
+  const totalOrders = sortedOrders.length;
+  const totalIncome = sortedOrders.reduce(
+    (sum, order) => sum + getOrderPrice(order),
+    0
+  );
+
+  const summaryRows = [
+    "",
+    [escapeCsvField("סה״כ הזמנות שהושלמו"), totalOrders].join(","),
+    [escapeCsvField("סה״כ הכנסות"), totalIncome].join(","),
+  ];
+
+  return [headers.join(","), ...rows, ...summaryRows].join("\r\n");
+}
+
+export function downloadCompletedOrdersReport(
+  orders: AdminOrder[],
+  monthKey: string
+): void {
+  const csv = buildCompletedOrdersCsv(orders);
+  const blob = new Blob([`\uFEFF${csv}`], {
+    type: "text/csv;charset=utf-8;",
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `moonarose-completed-orders-${monthKey}.csv`;
+  link.click();
+  URL.revokeObjectURL(url);
 }
 
 export { groupProductImagesByProductId };

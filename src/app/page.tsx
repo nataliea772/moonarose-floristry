@@ -122,6 +122,12 @@ export default function Home() {
   }, [language, hasLoadedLanguage]);
 
   const handleSelectCategory = (category: ProductCategory) => {
+    if (selectedCategory === category) {
+      setSelectedCategory(null);
+      setSelectedSubcategory(SUBCATEGORY_FILTER_ALL);
+      return;
+    }
+
     setSelectedCategory(category);
     setSelectedSubcategory(SUBCATEGORY_FILTER_ALL);
   };

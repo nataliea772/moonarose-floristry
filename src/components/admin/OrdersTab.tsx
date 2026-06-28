@@ -6,8 +6,11 @@ import { ORDER_STATUS_LABELS } from "@/components/admin/constants";
 import { PrimaryActionButton } from "@/components/admin/AdminUI";
 import {
   buildDayOrderSummary,
+  downloadCompletedOrdersReport,
+  filterCompletedOrdersByRequestedMonth,
   formatOrderDate,
   formatOrderTimestamp,
+  getCurrentMonthKey,
   getOrderStatusFilterLabel,
   matchesOrderStatusFilter,
   shiftDateKey,
@@ -63,6 +66,23 @@ export function OrdersTab({
 }: OrdersTabProps) {
   const [selectedStatusFilter, setSelectedStatusFilter] =
     useState<OrderStatusFilter>("all");
+  const [reportMonth, setReportMonth] = useState(getCurrentMonthKey);
+  const [reportMessage, setReportMessage] = useState("");
+
+  const handleDownloadMonthlyReport = () => {
+    const completedOrders = filterCompletedOrdersByRequestedMonth(
+      orders,
+      reportMonth
+    );
+
+    if (completedOrders.length === 0) {
+      setReportMessage("אין הזמנות שהושלמו בחודש שנבחר");
+      return;
+    }
+
+    setReportMessage("");
+    downloadCompletedOrdersReport(completedOrders, reportMonth);
+  };
 
   const dateFilteredOrders = showAllOrders
     ? orders
@@ -143,6 +163,36 @@ export function OrdersTab({
           כל ההזמנות
         </button>
       </div>
+
+      <div className="admin-orders-report-controls">
+        <label className="admin-orders-month-picker">
+          <span className="admin-form-label">חודש לדוח</span>
+          <input
+            type="month"
+            className="admin-input"
+            value={reportMonth}
+            onChange={(event) => {
+              setReportMonth(event.target.value);
+              setReportMessage("");
+            }}
+          />
+        </label>
+
+        <button
+          type="button"
+          className="admin-btn-secondary admin-orders-report-btn"
+          onClick={handleDownloadMonthlyReport}
+          disabled={isLoadingOrders}
+        >
+          הורדת דוח חודשי
+        </button>
+      </div>
+
+      {reportMessage && (
+        <p className="admin-message-muted admin-orders-report-message">
+          {reportMessage}
+        </p>
+      )}
 
       <h3 className="admin-orders-day-title">
         {showAllOrders
