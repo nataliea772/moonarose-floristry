@@ -1,4 +1,7 @@
-import { buildWhatsAppHref } from "@/lib/contactStorage";
+import {
+  buildWhatsAppHref,
+  normalizeWhatsAppPhone,
+} from "@/lib/contactStorage";
 import { BRAND_NAME } from "@/lib/brand";
 
 export type OrderWhatsAppDetails = {
@@ -9,21 +12,7 @@ export type OrderWhatsAppDetails = {
 };
 
 export function normalizeCustomerPhoneForWhatsApp(phone: string): string {
-  const digits = phone.trim().replace(/[\s\-()+]/g, "").replace(/\D/g, "");
-
-  if (!digits) {
-    return "";
-  }
-
-  if (digits.startsWith("972")) {
-    return digits;
-  }
-
-  if (digits.startsWith("0")) {
-    return `972${digits.slice(1)}`;
-  }
-
-  return digits;
+  return normalizeWhatsAppPhone(phone);
 }
 
 export function buildOrderConfirmationMessage(
@@ -65,12 +54,7 @@ export function buildCustomerWhatsAppHref(
   phone: string,
   message: string
 ): string {
-  const normalized = normalizeCustomerPhoneForWhatsApp(phone);
-  if (!normalized) {
-    return "";
-  }
-
-  return buildWhatsAppHref(normalized, message);
+  return buildWhatsAppHref(phone, message);
 }
 
 export function openCustomerWhatsApp(phone: string, message: string): boolean {

@@ -23,6 +23,24 @@ export function buildPhoneHref(phone: string): string {
   return `tel:${trimmed}`;
 }
 
+export function normalizeWhatsAppPhone(phone: string): string {
+  const digits = phone.trim().replace(/[\s\-()+]/g, "").replace(/\D/g, "");
+
+  if (!digits) {
+    return "";
+  }
+
+  if (digits.startsWith("972")) {
+    return digits;
+  }
+
+  if (digits.startsWith("0")) {
+    return `972${digits.slice(1)}`;
+  }
+
+  return digits;
+}
+
 export function buildWhatsAppHref(whatsapp: string, message?: string): string {
   const trimmed = whatsapp.trim();
   if (!trimmed) {
@@ -43,12 +61,12 @@ export function buildWhatsAppHref(whatsapp: string, message?: string): string {
     }
   }
 
-  const digits = trimmed.replace(/\D/g, "");
-  if (!digits) {
+  const normalized = normalizeWhatsAppPhone(trimmed);
+  if (!normalized) {
     return "";
   }
 
-  const base = `https://wa.me/${digits}`;
+  const base = `https://wa.me/${normalized}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 
