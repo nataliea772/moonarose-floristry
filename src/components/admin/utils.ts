@@ -502,7 +502,7 @@ export function buildCompletedOrdersCsv(orders: AdminOrder[]): string {
     [escapeCsvField("סה״כ הכנסות"), totalIncome].join(","),
   ];
 
-  return [headers.join(","), ...rows, ...summaryRows].join("\r\n");
+  return [headers.map(escapeCsvField).join(","), ...rows, ...summaryRows].join("\r\n");
 }
 
 export function downloadCompletedOrdersReport(

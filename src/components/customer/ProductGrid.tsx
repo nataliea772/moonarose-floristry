@@ -1,6 +1,8 @@
 "use client";
 
 import { type ProductCategory } from "@/data/products";
+import { BackToCategoriesButton } from "@/components/customer/BackToCategoriesButton";
+import { CategoryEmptyState } from "@/components/customer/CategoryEmptyState";
 import { ProductCard } from "@/components/customer/ProductCard";
 import { type CustomerProduct } from "@/components/customer/types";
 import { type ProductReview } from "@/lib/reviews";
@@ -17,6 +19,8 @@ type ProductGridProps = {
   language: Language;
   translations: CustomerTranslations;
   reviewsByProductId: Map<string, ProductReview[]>;
+  customOrderWhatsAppHref: string;
+  onBackToCategories: () => void;
   onOpenGallery: (product: CustomerProduct, index?: number) => void;
   onOpenOrder: (product: CustomerProduct) => void;
 };
@@ -30,6 +34,8 @@ export function ProductGrid({
   language,
   translations: t,
   reviewsByProductId,
+  customOrderWhatsAppHref,
+  onBackToCategories,
   onOpenGallery,
   onOpenOrder,
 }: ProductGridProps) {
@@ -56,23 +62,34 @@ export function ProductGrid({
           )}
 
           {products.length === 0 ? (
-            <p className="choose-category-prompt">{t.noProductsInCategory}</p>
+            <CategoryEmptyState
+              translations={t}
+              whatsappHref={customOrderWhatsAppHref}
+              onBackToCategories={onBackToCategories}
+            />
           ) : (
-            <div
-              key={productRevealKey ?? "products"}
-              className="product-grid product-grid-animate"
-            >
-              {products.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  language={language}
-                  translations={t}
-                  reviews={reviewsByProductId.get(product.id) ?? []}
-                  onOpenGallery={onOpenGallery}
-                  onOpenOrder={onOpenOrder}
-                />
-              ))}
+            <div className="category-results-panel">
+              <BackToCategoriesButton
+                translations={t}
+                onClick={onBackToCategories}
+              />
+
+              <div
+                key={productRevealKey ?? "products"}
+                className="product-grid product-grid-animate"
+              >
+                {products.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    language={language}
+                    translations={t}
+                    reviews={reviewsByProductId.get(product.id) ?? []}
+                    onOpenGallery={onOpenGallery}
+                    onOpenOrder={onOpenOrder}
+                  />
+                ))}
+              </div>
             </div>
           )}
         </>

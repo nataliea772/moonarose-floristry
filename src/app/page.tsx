@@ -22,6 +22,8 @@ import {
 import { supabase } from "@/lib/supabaseClient";
 import {
   getDateLocale,
+  getCategoryLabel,
+  getSubcategoryLabel,
   getTextDirection,
   getTranslations,
   isLanguage,
@@ -393,6 +395,13 @@ export default function Home() {
     );
   };
 
+  const handleBackToCategories = () => {
+    document.getElementById("category-selector")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   const phoneHref = contactDetails.phone.trim()
     ? buildPhoneHref(contactDetails.phone)
     : "";
@@ -405,6 +414,19 @@ export default function Home() {
   const hasContactButtons = Boolean(
     phoneHref || whatsappContactHref || instagramHref || facebookHref || tiktokHref
   );
+
+  const customOrderWhatsAppHref =
+    selectedCategory && contactDetails.whatsapp.trim()
+      ? buildWhatsAppHref(
+          contactDetails.whatsapp,
+          t.customOrderWhatsAppMessage(
+            getCategoryLabel(selectedCategory, language),
+            selectedSubcategory !== SUBCATEGORY_FILTER_ALL
+              ? ` / ${getSubcategoryLabel(selectedSubcategory, language)}`
+              : ""
+          )
+        )
+      : "";
 
   return (
     <main className="boutique-page text-[#2f1f1b]" dir={pageDirection}>
@@ -456,6 +478,8 @@ export default function Home() {
           language={language}
           translations={t}
           reviewsByProductId={reviewsByProductId}
+          customOrderWhatsAppHref={customOrderWhatsAppHref}
+          onBackToCategories={handleBackToCategories}
           onOpenGallery={openGallery}
           onOpenOrder={openOrderModal}
         />

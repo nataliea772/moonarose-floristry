@@ -4,18 +4,19 @@ export type ProductCategory =
   | "קישוט רכב"
   | "חתונות"
   | "הפקות"
-  | "מתנות"
   | "אירועים פרטיים";
 
 export type WeddingSubcategory =
   | "מסיבת רווקות"
   | "חתונות"
-  | "זרי כלה"
-  | "חינה כלה";
+  | "זרי כלה";
 
 export type ProductionsSubcategory = "NEW BORN" | "ימי הולדת";
 
-export type PrivateEventsSubcategory = "הצעת נישואין";
+export type PrivateEventsSubcategory =
+  | "הצעת נישואין"
+  | "ברית / בריתה"
+  | "אירוח ביתי";
 
 export type ProductSubcategory =
   | WeddingSubcategory
@@ -28,16 +29,15 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
   "קישוט רכב",
   "חתונות",
   "הפקות",
-  "מתנות",
   "אירועים פרטיים",
 ];
 
 export const CATEGORY_SUBCATEGORIES: Partial<
   Record<ProductCategory, readonly ProductSubcategory[]>
 > = {
-  חתונות: ["מסיבת רווקות", "חתונות", "זרי כלה", "חינה כלה"],
+  חתונות: ["מסיבת רווקות", "חתונות", "זרי כלה"],
   הפקות: ["NEW BORN", "ימי הולדת"],
-  "אירועים פרטיים": ["הצעת נישואין"],
+  "אירועים פרטיים": ["הצעת נישואין", "ברית / בריתה", "אירוח ביתי"],
 };
 
 export const SUBCATEGORY_FILTER_ALL = "הכל" as const;

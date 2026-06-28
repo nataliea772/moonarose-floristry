@@ -87,13 +87,15 @@ export function OrderModal({
 
         {orderSuccess ? (
           <div className="order-modal-body order-success-view">
-            <div className="order-success-icon" aria-hidden="true">
-              ✓
+            <div className="order-success-emblem" aria-hidden="true">
+              <span className="order-success-moon" />
+              <span className="order-success-petal" />
             </div>
             <h2 id="order-modal-title" className="order-success-title">
               {t.orderSuccessTitle}
             </h2>
             <p className="order-success-text">{t.orderSuccessText}</p>
+            <p className="order-success-note">{t.orderSuccessNote}</p>
 
             <div className="order-modal-actions">
               <button type="button" className="order-btn" onClick={onClose}>

@@ -23,6 +23,7 @@ export function CategorySelector({
 }: CategorySelectorProps) {
   return (
     <section
+      id="category-selector"
       className="category-selector category-grid mb-5 sm:mb-16"
       aria-label="Categories"
     >

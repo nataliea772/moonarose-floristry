@@ -80,6 +80,7 @@ body {
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
+  scroll-behavior: smooth;
   background:
     radial-gradient(ellipse 90% 55% at 50% -5%, rgba(252, 238, 234, 0.95) 0%, transparent 62%),
     radial-gradient(ellipse 55% 40% at 100% 15%, rgba(244, 221, 213, 0.38) 0%, transparent 58%),
@@ -518,6 +519,231 @@ body {
   .choose-category-prompt {
     font-size: 0.9rem;
     padding-top: 0.5rem;
+  }
+}
+
+.back-to-categories-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.48rem 0.85rem;
+  border: 1px solid rgba(236, 209, 200, 0.95);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #5a3731;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 6px 18px rgba(120, 70, 60, 0.06);
+  cursor: pointer;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.back-to-categories-btn:hover {
+  border-color: rgba(201, 147, 147, 0.55);
+  background: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 8px 22px rgba(120, 70, 60, 0.09);
+}
+
+.back-to-categories-btn:focus-visible {
+  outline: 2px solid rgba(201, 147, 147, 0.55);
+  outline-offset: 2px;
+}
+
+.back-to-categories-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 999px;
+  background: rgba(252, 238, 234, 0.95);
+  font-size: 0.82rem;
+  line-height: 1;
+  color: #9f5f5f;
+}
+
+[dir="rtl"] .back-to-categories-icon {
+  transform: scaleX(-1);
+}
+
+.category-results-panel,
+.category-empty-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.category-empty-panel {
+  align-items: center;
+}
+
+.category-empty-state {
+  position: relative;
+  width: min(100%, 24rem);
+  overflow: hidden;
+  border: 1px solid rgba(236, 209, 200, 0.95);
+  border-radius: 1.65rem;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(252, 238, 234, 0.75) 0%, transparent 58%),
+    linear-gradient(165deg, #fffaf8 0%, #fceeea 46%, #fff8f5 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 16px 38px rgba(120, 70, 60, 0.09);
+}
+
+.category-empty-state::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(201, 147, 147, 0.08) 0%, transparent 28%),
+    radial-gradient(circle at 12% 88%, rgba(201, 147, 147, 0.06) 0%, transparent 24%);
+}
+
+.category-empty-state-inner {
+  position: relative;
+  z-index: 1;
+  padding: 1.2rem 1.15rem 1.25rem;
+  text-align: center;
+}
+
+.category-empty-state-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+  padding: 0.28rem 0.72rem;
+  border: 1px solid rgba(201, 147, 147, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #b47b7b;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.category-empty-state-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-bottom: 0.8rem;
+}
+
+.category-empty-state-mark-dot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, #fceeea 0%, #c99393 100%);
+  box-shadow: 0 0 0 2px rgba(252, 238, 234, 0.95);
+}
+
+.category-empty-state-mark-line {
+  width: 2.35rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(201, 147, 147, 0.12) 0%,
+    rgba(201, 147, 147, 0.42) 50%,
+    rgba(201, 147, 147, 0.12) 100%
+  );
+}
+
+.category-empty-state-title {
+  margin: 0 0 0.55rem;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.42;
+  color: #3b2521;
+}
+
+.category-empty-state-text {
+  margin: 0 auto 1.05rem;
+  max-width: 18rem;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: #755d56;
+}
+
+.category-empty-state-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  min-width: min(100%, 14rem);
+  padding: 0.62rem 1.15rem;
+  border: 1px solid rgba(159, 95, 95, 0.22);
+  border-radius: 999px;
+  background: linear-gradient(135deg, #a86868 0%, #9f5f5f 55%, #8b4f4f 100%);
+  color: #fffaf8;
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(139, 79, 79, 0.24);
+  transition:
+    filter 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.category-empty-state-whatsapp-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex-shrink: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .category-empty-state-whatsapp:hover {
+    filter: brightness(1.05);
+    box-shadow: 0 12px 30px rgba(139, 79, 79, 0.3);
+    transform: translateY(-1px);
+  }
+}
+
+@media (min-width: 640px) {
+  .back-to-categories-btn {
+    font-size: 0.82rem;
+    padding: 0.52rem 0.95rem;
+  }
+
+  .category-empty-panel {
+    gap: 1rem;
+  }
+
+  .category-empty-state-inner {
+    padding: 1.45rem 1.35rem 1.5rem;
+  }
+
+  .category-empty-state-label {
+    font-size: 0.72rem;
+  }
+
+  .category-empty-state-title {
+    font-size: 1.18rem;
+  }
+
+  .category-empty-state-text {
+    font-size: 0.92rem;
   }
 }
 
@@ -1675,19 +1901,40 @@ body {
   text-align: center;
 }
 
-.order-success-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
+.order-success-emblem {
+  position: relative;
+  width: 4.2rem;
+  height: 4.2rem;
   margin: 0 auto 1.15rem;
   border-radius: 999px;
-  border: 2px solid rgba(201, 147, 147, 0.45);
-  background: linear-gradient(145deg, #fceeea 0%, #fff8f5 100%);
-  color: #9f5f5f;
-  font-size: 1.65rem;
-  font-weight: 700;
+  border: 1px solid rgba(236, 209, 200, 0.95);
+  background: linear-gradient(145deg, #fffaf8 0%, #fceeea 58%, #fff8f5 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 12px 28px rgba(120, 70, 60, 0.08);
+}
+
+.order-success-moon {
+  position: absolute;
+  top: 1.05rem;
+  left: 1.05rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, #fff 0%, #e8b4b4 45%, #c99393 100%);
+  box-shadow: 0 0 0 1px rgba(201, 147, 147, 0.2);
+}
+
+.order-success-petal {
+  position: absolute;
+  top: 0.95rem;
+  right: 0.95rem;
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 999px 999px 999px 0;
+  background: radial-gradient(circle at 35% 35%, #fff 0%, #e8b4b4 40%, #c99393 100%);
+  transform: rotate(18deg);
+  opacity: 0.92;
 }
 
 .order-success-title {
@@ -1698,10 +1945,18 @@ body {
 }
 
 .order-success-text {
-  margin-bottom: 1.35rem;
+  margin-bottom: 0.75rem;
   font-size: 0.95rem;
   line-height: 1.65;
   color: #755d56;
+}
+
+.order-success-note {
+  margin: 0 0 1.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #b47b7b;
 }
 
 .order-info-box {
@@ -2176,6 +2431,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .boutique-page {
+    scroll-behavior: auto;
+  }
+
   .boutique-page .hero-eyebrow,
   .boutique-page .brand-title,
   .boutique-page .hero-tagline,
@@ -2205,6 +2464,8 @@ body {
   .boutique-page .contact-icon-btn,
   .coming-soon-van,
   .coming-soon-van-visual,
+  .back-to-categories-btn,
+  .category-empty-state-whatsapp,
   .order-modal-close,
   .order-btn-secondary,
   .subcategory-chip {
@@ -2215,9 +2476,11 @@ body {
     .boutique-page .product-card:hover,
     .boutique-page .category-card:hover,
     .boutique-page .order-btn:hover:not(:disabled),
-  .coming-soon-van:hover,
-  .boutique-page .contact-icon-btn:hover,
-  .order-modal-close:hover {
+    .coming-soon-van:hover,
+    .boutique-page .contact-icon-btn:hover,
+    .back-to-categories-btn:hover,
+    .category-empty-state-whatsapp:hover,
+    .order-modal-close:hover {
       transform: none !important;
     }
 
