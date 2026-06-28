@@ -32,7 +32,7 @@ export function SubcategorySelector({
   const subcategories = getSubcategoriesForCategory(category);
 
   return (
-    <section className="subcategory-selector mb-4 sm:mb-8">
+    <section key={category} className="subcategory-selector mb-4 sm:mb-8">
       <button
         type="button"
         className={`subcategory-chip ${

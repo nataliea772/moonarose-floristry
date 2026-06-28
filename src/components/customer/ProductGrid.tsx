@@ -12,6 +12,7 @@ type ProductGridProps = {
   isLoading: boolean;
   loadError: string;
   selectedCategory: ProductCategory | null;
+  productRevealKey: string | null;
   products: CustomerProduct[];
   language: Language;
   translations: CustomerTranslations;
@@ -24,6 +25,7 @@ export function ProductGrid({
   isLoading,
   loadError,
   selectedCategory,
+  productRevealKey,
   products,
   language,
   translations: t,
@@ -56,7 +58,10 @@ export function ProductGrid({
           {products.length === 0 ? (
             <p className="choose-category-prompt">{t.noProductsInCategory}</p>
           ) : (
-            <div className="product-grid">
+            <div
+              key={productRevealKey ?? "products"}
+              className="product-grid product-grid-animate"
+            >
               {products.map((product) => (
                 <ProductCard
                   key={product.id}

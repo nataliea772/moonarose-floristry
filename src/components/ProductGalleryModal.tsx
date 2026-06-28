@@ -55,7 +55,7 @@ export function ProductGalleryModal({
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-5"
+      className="order-modal-overlay fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-5"
       role="dialog"
       aria-modal="true"
       aria-label={labels.galleryTitle(productName)}

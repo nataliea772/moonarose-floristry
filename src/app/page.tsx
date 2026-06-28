@@ -35,6 +35,7 @@ import { CustomerHero } from "@/components/customer/CustomerHero";
 import { LanguageSelect } from "@/components/customer/LanguageSelect";
 import { OrderModal } from "@/components/customer/OrderModal";
 import { ProductGrid } from "@/components/customer/ProductGrid";
+import { ComingSoonVanCard } from "@/components/customer/ComingSoonVanCard";
 import { type CustomerProduct } from "@/components/customer/types";
 import {
   getAvailableDates,
@@ -434,10 +435,17 @@ export default function Home() {
           />
         )}
 
+        <ComingSoonVanCard translations={t} />
+
         <ProductGrid
           isLoading={isLoading}
           loadError={loadError}
           selectedCategory={selectedCategory}
+          productRevealKey={
+            selectedCategory
+              ? `${selectedCategory}-${selectedSubcategory}`
+              : null
+          }
           products={categoryProducts}
           language={language}
           translations={t}
