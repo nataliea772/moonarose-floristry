@@ -1,4 +1,8 @@
-import { type ProductCategory } from "@/data/products";
+import {
+  PRODUCT_CATEGORIES,
+  type ProductCategory,
+  type ProductSubcategory,
+} from "@/data/categories";
 
 export type Language = "he" | "ar" | "en";
 
@@ -14,17 +18,26 @@ const categoryLabels: Record<Language, Record<ProductCategory, string>> = {
   he: {
     זרים: "זרים",
     בוקסים: "בוקסים",
+    "קישוט רכב": "קישוט רכב",
+    חתונות: "חתונות",
     הפקות: "הפקות",
+    "אירועים פרטיים": "אירועים פרטיים",
   },
   ar: {
     זרים: "باقات",
     בוקסים: "بوكسات",
-    הפקות: "تنسيقات",
+    "קישוט רכב": "تزيين سيارات",
+    חתונות: "أعراس",
+    הפקות: "تنسيقات ومناسبات",
+    "אירועים פרטיים": "مناسبات خاصة",
   },
   en: {
     זרים: "Bouquets",
     בוקסים: "Boxes",
+    "קישוט רכב": "Car Decoration",
+    חתונות: "Weddings",
     הפקות: "Events",
+    "אירועים פרטיים": "Private Events",
   },
 };
 
@@ -33,19 +46,61 @@ const categoryDescriptions: Record<
   Record<ProductCategory, string>
 > = {
   he: {
-    זרים: "זרים מעוצבים לאירועים, מתנות ורגעים מיוחדים",
-    בוקסים: "בוקסים אלגנטיים עם פרחים בעיצוב אישי",
-    הפקות: "עיצובי פרחים להפקות, אירועים וצילומים",
+    זרים: "זרים מעוצבים לכל רגע מיוחד",
+    בוקסים: "בוקסים אלגנטיים עם פרחים טריים",
+    "קישוט רכב": "קישוט פרחים לרכב ליום המיוחד",
+    חתונות: "פרחים לחתונה ולכל שלבי האירוע",
+    הפקות: "עיצוב פרחים להפקות, צילומים ואירועים",
+    "אירועים פרטיים": "פרחים לאירועים אינטימיים ורגעים אישיים",
   },
   ar: {
-    זרים: "باقات زهرية مصممة للمناسبات والهدايا واللحظات المميزة",
-    בוקסים: "بوكسات أنيقة بزهور بتصميم شخصي",
-    הפקות: "تنسيقات زهرية للإنتاج والفعاليات والتصوير",
+    זרים: "باقات مصممة للحظات المميزة",
+    בוקסים: "بوكسات أنيقة بزهور طازجة",
+    "קישוט רכב": "تزيين زهور للسيارة في يومك المميز",
+    חתונות: "زهور للزفاف وكل مراحل الاحتفال",
+    הפקות: "تنسيقات زهرية للإنتاج والتصوير والفعاليات",
+    "אירועים פרטיים": "زهور للمناسبات الخاصة واللحظات الشخصية",
   },
   en: {
-    זרים: "Designed bouquets for events, gifts, and special moments",
-    בוקסים: "Elegant boxes with personally styled flowers",
-    הפקות: "Floral styling for productions, events, and photoshoots",
+    זרים: "Styled bouquets for special moments",
+    בוקסים: "Elegant boxes with fresh flowers",
+    "קישוט רכב": "Floral car styling for your big day",
+    חתונות: "Flowers for weddings and every celebration stage",
+    הפקות: "Floral design for productions, shoots, and events",
+    "אירועים פרטיים": "Flowers for intimate events and personal moments",
+  },
+};
+
+const subcategoryLabels: Record<
+  Language,
+  Record<ProductSubcategory, string>
+> = {
+  he: {
+    "מסיבת רווקות": "מסיבת רווקות",
+    חתונות: "חתונות",
+    "זרי כלה": "זרי כלה",
+    "חינה כלה": "חינה כלה",
+    "NEW BORN": "NEW BORN",
+    "ימי הולדת": "ימי הולדת",
+    "הצעת נישואין": "הצעת נישואין",
+  },
+  ar: {
+    "מסיבת רווקות": "حفلة وداع العزوبية",
+    חתונות: "أعراس",
+    "זרי כלה": "باقات عروس",
+    "חינה כלה": "حنة العروس",
+    "NEW BORN": "مولود جديد",
+    "ימי הולדת": "أعياد ميلاد",
+    "הצעת נישואין": "عرض زواج",
+  },
+  en: {
+    "מסיבת רווקות": "Bridal Shower / Bachelorette",
+    חתונות: "Weddings",
+    "זרי כלה": "Bridal Bouquets",
+    "חינה כלה": "Henna Night",
+    "NEW BORN": "NEW BORN",
+    "ימי הולדת": "Birthdays",
+    "הצעת נישואין": "Proposal",
   },
 };
 
@@ -62,6 +117,7 @@ export const translations = {
     loadError: "לא הצלחנו לטעון את הנתונים כרגע",
     noProducts: "מוצרים יתווספו בקרוב",
     chooseCategoryPrompt: "בחרי קטגוריה כדי לראות את הפריטים",
+    subcategoryAll: "הכל",
     orderButton: "להזמנה",
     noRatingsYet: "עדיין אין דירוגים",
     ratingOutOfFive: (rating: number) => `${rating} מתוך 5`,
@@ -110,6 +166,7 @@ export const translations = {
     loadError: "لم نتمكن من تحميل البيانات حالياً",
     noProducts: "سيتم إضافة منتجات قريباً",
     chooseCategoryPrompt: "اختاري فئة لعرض المنتجات",
+    subcategoryAll: "الكل",
     orderButton: "للطلب",
     noRatingsYet: "لا توجد تقييمات بعد",
     ratingOutOfFive: (rating: number) => `${rating} من 5`,
@@ -159,6 +216,7 @@ export const translations = {
     loadError: "We couldn't load the data right now",
     noProducts: "Products coming soon",
     chooseCategoryPrompt: "Choose a category to view the pieces",
+    subcategoryAll: "All",
     orderButton: "Order",
     noRatingsYet: "No ratings yet",
     ratingOutOfFive: (rating: number) => `${rating} out of 5`,
@@ -221,6 +279,13 @@ export function getCategoryDescription(
   return categoryDescriptions[language][category];
 }
 
+export function getSubcategoryLabel(
+  subcategory: ProductSubcategory,
+  language: Language
+): string {
+  return subcategoryLabels[language][subcategory];
+}
+
 export function getDateLocale(language: Language): string {
   if (language === "ar") {
     return "ar-SA";
@@ -237,4 +302,4 @@ export function getTextDirection(language: Language): "rtl" | "ltr" {
   return language === "en" ? "ltr" : "rtl";
 }
 
-export const productCategories: ProductCategory[] = ["זרים", "בוקסים", "הפקות"];
+export const productCategories = PRODUCT_CATEGORIES;

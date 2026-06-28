@@ -1,6 +1,6 @@
 "use client";
 
-import { type ProductCategory } from "@/data/products";
+import { type ProductCategory } from "@/data/categories";
 import {
   getCategoryDescription,
   getCategoryLabel,

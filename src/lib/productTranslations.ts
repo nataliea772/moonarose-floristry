@@ -12,7 +12,7 @@ export type ProductTranslationFields = {
 };
 
 export const PRODUCT_SELECT_COLUMNS =
-  "id, name, description, category, price, preparation_days, image_url, is_active, created_at, name_he, description_he, name_ar, description_ar, name_en, description_en";
+  "id, name, description, category, subcategory, price, preparation_days, image_url, is_active, created_at, name_he, description_he, name_ar, description_ar, name_en, description_en";
 
 function pickTranslation(value: string | null | undefined): string | undefined {
   const trimmed = value?.trim();

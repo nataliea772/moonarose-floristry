@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { type ProductCategory } from "@/data/products";
+import {
+  categoryHasSubcategories,
+  normalizeProductSubcategory,
+  type ProductCategory,
+} from "@/data/categories";
 import { EMPTY_CONTACT_DETAILS } from "@/lib/contactStorage";
 import {
   DEFAULT_ORDER_SETTINGS,
@@ -654,6 +658,21 @@ export default function AdminPage() {
       return;
     }
 
+    if (
+      categoryHasSubcategories(productForm.category) &&
+      !productForm.subcategory.trim()
+    ) {
+      setFormError("יש לבחור תת-קטגוריה.");
+      return;
+    }
+
+    const subcategoryPayload = categoryHasSubcategories(productForm.category)
+      ? normalizeProductSubcategory(
+          productForm.category,
+          productForm.subcategory
+        )
+      : null;
+
     if (!description) {
       setFormError("יש להזין תיאור.");
       return;
@@ -678,6 +697,7 @@ export default function AdminPage() {
         .update({
           ...translationPayload,
           category: productForm.category,
+          subcategory: subcategoryPayload,
           price,
           preparation_days: preparationDays,
         })
@@ -774,6 +794,7 @@ export default function AdminPage() {
         .insert({
           ...translationPayload,
           category: productForm.category,
+          subcategory: subcategoryPayload,
           price,
           preparation_days: preparationDays,
           image_url: null,

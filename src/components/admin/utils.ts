@@ -1,4 +1,4 @@
-import { type ProductCategory } from "@/data/products";
+import { type ProductCategory, normalizeProductSubcategory } from "@/data/categories";
 import { type ContactDetails } from "@/lib/contactStorage";
 import {
   DEFAULT_ORDER_SETTINGS,
@@ -29,6 +29,7 @@ export type SupabaseProductRow = {
   id: string;
   name: string;
   category: string;
+  subcategory?: string | null;
   description: string;
   price: number | string;
   preparation_days: number;
@@ -205,6 +206,7 @@ export function mapSupabaseProduct(
     id: row.id,
     name: row.name,
     category: row.category,
+    subcategory: normalizeProductSubcategory(row.category, row.subcategory),
     description: row.description,
     ...mapProductTranslationFields(row),
     price: Number(row.price),
@@ -246,6 +248,7 @@ export function emptyProductForm(
   return {
     name: "",
     category,
+    subcategory: "",
     description: "",
     nameAr: "",
     descriptionAr: "",
@@ -292,6 +295,7 @@ export function productToFormState(product: AdminProduct): ProductFormState {
   return {
     name: product.nameHe ?? product.name,
     category: product.category,
+    subcategory: product.subcategory ?? "",
     description: product.descriptionHe ?? product.description,
     nameAr: product.nameAr ?? "",
     descriptionAr: product.descriptionAr ?? "",

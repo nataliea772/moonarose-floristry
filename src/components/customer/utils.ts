@@ -2,6 +2,7 @@ import {
   products as defaultProducts,
   type ProductCategory,
 } from "@/data/products";
+import { normalizeProductSubcategory } from "@/data/categories";
 import {
   resolveProductImageUrls,
   type ProductImageRecord,
@@ -15,6 +16,7 @@ export type SupabaseProductRow = {
   id: string;
   name: string;
   category: string;
+  subcategory?: string | null;
   description: string;
   price: number | string;
   preparation_days: number;
@@ -75,6 +77,7 @@ export function mapDefaultProducts(): CustomerProduct[] {
     id: String(product.id),
     name: product.name,
     category: product.category,
+    subcategory: product.subcategory ?? null,
     description: product.description,
     price: product.price,
     preparationDays: product.preparationDays,
@@ -97,6 +100,7 @@ export function mapSupabaseProduct(
     id: row.id,
     name: row.name,
     category: row.category,
+    subcategory: normalizeProductSubcategory(row.category, row.subcategory),
     description: row.description,
     ...mapProductTranslationFields(row),
     price: Number(row.price),

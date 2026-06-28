@@ -1,4 +1,4 @@
-import { type ProductCategory } from "@/data/products";
+import { PRODUCT_CATEGORIES, type ProductCategory } from "@/data/categories";
 import { type AdminTab, type OrderStatus } from "@/components/admin/types";
 
 export const CLOSED_DATE_REASON = "סגור להזמנות";
@@ -27,7 +27,7 @@ export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   completed: "הושלמה",
 };
 
-export const productCategories: ProductCategory[] = ["זרים", "בוקסים", "הפקות"];
+export const productCategories = PRODUCT_CATEGORIES;
 
 export const weekdayLabels = ["א'", "ב'", "ג'", "ד'", "ה'", "ו'", "ש'"];
 

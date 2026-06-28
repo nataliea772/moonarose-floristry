@@ -1,4 +1,4 @@
-import { type ProductCategory } from "@/data/products";
+import { type ProductCategory, type ProductSubcategory } from "@/data/categories";
 import { type ContactDetails } from "@/lib/contactStorage";
 import { type ProductImageRecord } from "@/lib/productImages";
 import { type ProductTranslationFields } from "@/lib/productTranslations";
@@ -6,6 +6,7 @@ import { type ProductTranslationFields } from "@/lib/productTranslations";
 export type AdminProduct = ProductTranslationFields & {
   id: string;
   category: ProductCategory;
+  subcategory: ProductSubcategory | null;
   price: number;
   preparationDays: number;
   images: ProductImageRecord[];
@@ -59,6 +60,7 @@ export type AdminOrder = {
 export type ProductFormState = {
   name: string;
   category: ProductCategory;
+  subcategory: string;
   description: string;
   nameAr: string;
   descriptionAr: string;

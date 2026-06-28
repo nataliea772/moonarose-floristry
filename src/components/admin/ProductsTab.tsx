@@ -1,6 +1,10 @@
 "use client";
 
-import { type ProductCategory } from "@/data/products";
+import {
+  categoryHasSubcategories,
+  getSubcategoriesForCategory,
+  type ProductCategory,
+} from "@/data/categories";
 import { ProductImage } from "@/components/ProductImage";
 import { hasProductLanguageTranslation } from "@/lib/productTranslations";
 import { type ProductImageRecord } from "@/lib/productImages";
@@ -109,12 +113,15 @@ export function ProductsTab({
               <select
                 className={inputClassName}
                 value={productForm.category}
-                onChange={(event) =>
+                onChange={(event) => {
+                  const nextCategory = event.target.value as ProductCategory;
+
                   onProductFormChange((previous) => ({
                     ...previous,
-                    category: event.target.value as ProductCategory,
-                  }))
-                }
+                    category: nextCategory,
+                    subcategory: "",
+                  }));
+                }}
               >
                 {productCategories.map((category) => (
                   <option key={category} value={category}>
@@ -123,6 +130,30 @@ export function ProductsTab({
                 ))}
               </select>
             </FormField>
+
+            {categoryHasSubcategories(productForm.category) && (
+              <FormField label="תת-קטגוריה">
+                <select
+                  className={inputClassName}
+                  value={productForm.subcategory}
+                  onChange={(event) =>
+                    onProductFormChange((previous) => ({
+                      ...previous,
+                      subcategory: event.target.value,
+                    }))
+                  }
+                >
+                  <option value="">בחרי תת-קטגוריה</option>
+                  {getSubcategoriesForCategory(productForm.category).map(
+                    (subcategory) => (
+                      <option key={subcategory} value={subcategory}>
+                        {subcategory}
+                      </option>
+                    )
+                  )}
+                </select>
+              </FormField>
+            )}
 
             <FormField label="תיאור בעברית" className="admin-form-grid-span-2">
               <textarea
@@ -344,7 +375,10 @@ export function ProductsTab({
                 <h4 className="admin-product-name">
                   {getAdminProductHebrewName(product)}
                 </h4>
-                <p className="admin-product-meta">{product.category}</p>
+                <p className="admin-product-meta">
+                  {product.category}
+                  {product.subcategory ? ` · ${product.subcategory}` : ""}
+                </p>
                 <p className="admin-product-desc">
                   {getAdminProductHebrewDescription(product)}
                 </p>

@@ -1,9 +1,15 @@
-export type ProductCategory = "זרים" | "בוקסים" | "הפקות";
+import {
+  type ProductCategory,
+  type ProductSubcategory,
+} from "@/data/categories";
+
+export type { ProductCategory, ProductSubcategory };
 
 export type Product = {
   id: number;
   name: string;
   category: ProductCategory;
+  subcategory?: ProductSubcategory | null;
   description: string;
   price: number;
   preparationDays: number;

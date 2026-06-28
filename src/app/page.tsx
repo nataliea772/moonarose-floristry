@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { type ProductCategory } from "@/data/products";
+import {
+  categoryHasSubcategories,
+  SUBCATEGORY_FILTER_ALL,
+  type ProductCategory,
+  type SubcategoryFilter,
+} from "@/data/categories";
 import {
   EMPTY_CONTACT_DETAILS,
   buildPhoneHref,
@@ -25,6 +30,7 @@ import {
 } from "@/lib/translations";
 import { ProductGalleryModal } from "@/components/ProductGalleryModal";
 import { CategorySelector } from "@/components/customer/CategorySelector";
+import { SubcategorySelector } from "@/components/customer/SubcategorySelector";
 import { CustomerHero } from "@/components/customer/CustomerHero";
 import { LanguageSelect } from "@/components/customer/LanguageSelect";
 import { OrderModal } from "@/components/customer/OrderModal";
@@ -56,6 +62,8 @@ import {
 export default function Home() {
   const [selectedCategory, setSelectedCategory] =
     useState<ProductCategory | null>(null);
+  const [selectedSubcategory, setSelectedSubcategory] =
+    useState<SubcategoryFilter>(SUBCATEGORY_FILTER_ALL);
   const [orderProduct, setOrderProduct] = useState<CustomerProduct | null>(
     null
   );
@@ -112,8 +120,27 @@ export default function Home() {
     localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
   }, [language, hasLoadedLanguage]);
 
+  const handleSelectCategory = (category: ProductCategory) => {
+    setSelectedCategory(category);
+    setSelectedSubcategory(SUBCATEGORY_FILTER_ALL);
+  };
+
   const categoryProducts = selectedCategory
-    ? productsList.filter((product) => product.category === selectedCategory)
+    ? productsList.filter((product) => {
+        if (product.category !== selectedCategory) {
+          return false;
+        }
+
+        if (!categoryHasSubcategories(selectedCategory)) {
+          return true;
+        }
+
+        if (selectedSubcategory === SUBCATEGORY_FILTER_ALL) {
+          return true;
+        }
+
+        return product.subcategory === selectedSubcategory;
+      })
     : [];
 
   const availableDates = orderProduct
@@ -394,8 +421,18 @@ export default function Home() {
         <CategorySelector
           selectedCategory={selectedCategory}
           language={language}
-          onSelectCategory={setSelectedCategory}
+          onSelectCategory={handleSelectCategory}
         />
+
+        {selectedCategory && categoryHasSubcategories(selectedCategory) && (
+          <SubcategorySelector
+            category={selectedCategory}
+            selectedSubcategory={selectedSubcategory}
+            language={language}
+            translations={t}
+            onSelectSubcategory={setSelectedSubcategory}
+          />
+        )}
 
         <ProductGrid
           isLoading={isLoading}
