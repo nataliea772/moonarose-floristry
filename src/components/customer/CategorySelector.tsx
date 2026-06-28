@@ -9,7 +9,7 @@ import {
 import { productCategoriesList } from "@/components/customer/utils";
 
 type CategorySelectorProps = {
-  selectedCategory: ProductCategory;
+  selectedCategory: ProductCategory | null;
   language: Language;
   onSelectCategory: (category: ProductCategory) => void;
 };
@@ -20,7 +20,7 @@ export function CategorySelector({
   onSelectCategory,
 }: CategorySelectorProps) {
   return (
-    <section className="category-grid mb-14 sm:mb-16">
+    <section className="category-selector category-grid mb-5 sm:mb-16">
       {productCategoriesList.map((category) => {
         const isSelected = selectedCategory === category;
 
@@ -30,6 +30,7 @@ export function CategorySelector({
             type="button"
             className={`category-card ${isSelected ? "category-card-selected" : ""}`}
             onClick={() => onSelectCategory(category)}
+            aria-pressed={isSelected}
           >
             <h2 className="category-card-title">
               {getCategoryLabel(category, language)}

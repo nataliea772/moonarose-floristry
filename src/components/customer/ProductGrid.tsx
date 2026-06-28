@@ -1,5 +1,6 @@
 "use client";
 
+import { type ProductCategory } from "@/data/products";
 import { ProductCard } from "@/components/customer/ProductCard";
 import { type CustomerProduct } from "@/components/customer/types";
 import { type ProductReview } from "@/lib/reviews";
@@ -10,6 +11,7 @@ type CustomerTranslations = ReturnType<typeof getTranslations>;
 type ProductGridProps = {
   isLoading: boolean;
   loadError: string;
+  selectedCategory: ProductCategory | null;
   products: CustomerProduct[];
   language: Language;
   translations: CustomerTranslations;
@@ -21,6 +23,7 @@ type ProductGridProps = {
 export function ProductGrid({
   isLoading,
   loadError,
+  selectedCategory,
   products,
   language,
   translations: t,
@@ -31,17 +34,29 @@ export function ProductGrid({
   return (
     <section className="products-section">
       {isLoading ? (
-        <p className="text-center text-lg text-[#755d56]">
+        <p className="text-center text-base text-[#755d56] sm:text-lg">
           {t.loadingCollection}
         </p>
+      ) : !selectedCategory ? (
+        loadError ? (
+          <p className="text-center text-base text-[#9f5f5f] sm:text-lg">
+            {loadError}
+          </p>
+        ) : (
+          <p className="choose-category-prompt">{t.chooseCategoryPrompt}</p>
+        )
       ) : (
         <>
           {loadError && (
-            <p className="mb-6 text-center text-lg text-[#9f5f5f]">{loadError}</p>
+            <p className="mb-4 text-center text-base text-[#9f5f5f] sm:mb-6 sm:text-lg">
+              {loadError}
+            </p>
           )}
 
           {products.length === 0 ? (
-            <p className="text-center text-lg text-[#755d56]">{t.noProducts}</p>
+            <p className="text-center text-base text-[#755d56] sm:text-lg">
+              {t.noProducts}
+            </p>
           ) : (
             <div className="product-grid">
               {products.map((product) => (

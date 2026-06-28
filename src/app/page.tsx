@@ -55,7 +55,7 @@ import {
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] =
-    useState<ProductCategory>("זרים");
+    useState<ProductCategory | null>(null);
   const [orderProduct, setOrderProduct] = useState<CustomerProduct | null>(
     null
   );
@@ -112,9 +112,9 @@ export default function Home() {
     localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
   }, [language, hasLoadedLanguage]);
 
-  const categoryProducts = productsList.filter(
-    (product) => product.category === selectedCategory
-  );
+  const categoryProducts = selectedCategory
+    ? productsList.filter((product) => product.category === selectedCategory)
+    : [];
 
   const availableDates = orderProduct
     ? getAvailableDates(
@@ -153,12 +153,12 @@ export default function Home() {
             .from("contact_details")
             .select("phone, whatsapp, instagram, facebook, tiktok")
             .eq("id", 1)
-            .single(),
+            .maybeSingle(),
           supabase
             .from("order_settings")
             .select("available_dates_count, allow_same_day")
             .eq("id", 1)
-            .single(),
+            .maybeSingle(),
           supabase
             .from("reviews")
             .select("id, product_id, customer_name, rating, comment, created_at")
@@ -175,11 +175,11 @@ export default function Home() {
         }
 
         if (contactResponse.error) {
-          throw contactResponse.error;
+          console.error(contactResponse.error);
         }
 
         if (orderSettingsResponse.error) {
-          throw orderSettingsResponse.error;
+          console.error(orderSettingsResponse.error);
         }
 
         const groupedImages = groupProductImagesByProductId(productImagesRows);
@@ -197,17 +197,23 @@ export default function Home() {
           )
         );
 
-        const contact = contactResponse.data as SupabaseContactRow;
-        setContactDetails({
-          phone: contact.phone ?? "",
-          whatsapp: contact.whatsapp ?? "",
-          instagram: contact.instagram ?? "",
-          facebook: contact.facebook ?? "",
-          tiktok: contact.tiktok ?? "",
-        });
+        const contact = contactResponse.data as SupabaseContactRow | null;
+        setContactDetails(
+          contact
+            ? {
+                phone: contact.phone ?? "",
+                whatsapp: contact.whatsapp ?? "",
+                instagram: contact.instagram ?? "",
+                facebook: contact.facebook ?? "",
+                tiktok: contact.tiktok ?? "",
+              }
+            : EMPTY_CONTACT_DETAILS
+        );
 
-        const settings = orderSettingsResponse.data as SupabaseOrderSettingsRow;
-        const count = settings.available_dates_count ?? 5;
+        const settings = orderSettingsResponse.data as SupabaseOrderSettingsRow | null;
+        const count =
+          settings?.available_dates_count ??
+          DEFAULT_ORDER_SETTINGS.availableDatesCount;
         setOrderSettings({
           availableDatesCount: normalizeAvailableDatesCount(count),
         });
@@ -374,7 +380,7 @@ export default function Home() {
         onLanguageChange={setLanguage}
       />
 
-      <section className="boutique-content mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+      <section className="boutique-content mx-auto max-w-6xl px-4 py-4 sm:px-6 sm:py-12">
         <CustomerHero
           translations={t}
           phoneHref={phoneHref}
@@ -394,6 +400,7 @@ export default function Home() {
         <ProductGrid
           isLoading={isLoading}
           loadError={loadError}
+          selectedCategory={selectedCategory}
           products={categoryProducts}
           language={language}
           translations={t}

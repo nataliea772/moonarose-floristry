@@ -52,8 +52,7 @@ const categoryDescriptions: Record<
 export const translations = {
   he: {
     floralBoutique: "FLORAL BOUTIQUE",
-    heroTagline:
-      "זרים, בוקסים ועיצובי פרחים לאירועים מיוחדים — בעיצוב עדין, אלגנטי ומלא רגש.",
+    heroTagline: "כל פרח נושא רגש, כל סידור מספר סיפור.",
     phone: "טלפון",
     whatsapp: "WhatsApp",
     instagram: "Instagram",
@@ -62,6 +61,7 @@ export const translations = {
     loadingCollection: "טוען את הקולקציה...",
     loadError: "לא הצלחנו לטעון את הנתונים כרגע",
     noProducts: "מוצרים יתווספו בקרוב",
+    chooseCategoryPrompt: "בחרי קטגוריה כדי לראות את הפריטים",
     orderButton: "להזמנה",
     noRatingsYet: "עדיין אין דירוגים",
     ratingOutOfFive: (rating: number) => `${rating} מתוך 5`,
@@ -100,8 +100,7 @@ export const translations = {
   },
   ar: {
     floralBoutique: "FLORAL BOUTIQUE",
-    heroTagline:
-      "باقات وبوكسات وتنسيقات زهرية للمناسبات الخاصة — بتصميم رقيق، أنيق ومليء بالمشاعر.",
+    heroTagline: "كل زهرة تحمل شعورًا، وكل تنسيق يروي قصة.",
     phone: "هاتف",
     whatsapp: "WhatsApp",
     instagram: "Instagram",
@@ -110,6 +109,7 @@ export const translations = {
     loadingCollection: "جاري تحميل المجموعة...",
     loadError: "لم نتمكن من تحميل البيانات حالياً",
     noProducts: "سيتم إضافة منتجات قريباً",
+    chooseCategoryPrompt: "اختاري فئة لعرض المنتجات",
     orderButton: "للطلب",
     noRatingsYet: "لا توجد تقييمات بعد",
     ratingOutOfFive: (rating: number) => `${rating} من 5`,
@@ -149,7 +149,7 @@ export const translations = {
   en: {
     floralBoutique: "FLORAL BOUTIQUE",
     heroTagline:
-      "Bouquets, boxes, and floral styling for special occasions — delicate, elegant, and full of emotion.",
+      "Every flower carries a feeling, every arrangement tells a story.",
     phone: "Phone",
     whatsapp: "WhatsApp",
     instagram: "Instagram",
@@ -158,6 +158,7 @@ export const translations = {
     loadingCollection: "Loading the collection...",
     loadError: "We couldn't load the data right now",
     noProducts: "Products coming soon",
+    chooseCategoryPrompt: "Choose a category to view the pieces",
     orderButton: "Order",
     noRatingsYet: "No ratings yet",
     ratingOutOfFive: (rating: number) => `${rating} out of 5`,
