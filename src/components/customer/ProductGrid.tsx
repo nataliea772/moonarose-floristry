@@ -84,8 +84,21 @@ export function ProductGrid({
   };
 
   if (isLoading) {
+    if (!selectedCategory) {
+      return loadError ? (
+        <section className="products-section">
+          <p className="text-center text-base text-[#9f5f5f] sm:text-lg">
+            {loadError}
+          </p>
+        </section>
+      ) : null;
+    }
+
     return (
-      <section className="products-section">
+      <section
+        id="customer-products-section"
+        className="products-section customer-products-section"
+      >
         <p className="text-center text-base text-[#755d56] sm:text-lg">
           {t.loadingCollection}
         </p>
@@ -104,7 +117,10 @@ export function ProductGrid({
   }
 
   return (
-    <section className="products-section customer-products-section">
+    <section
+      id="customer-products-section"
+      className="products-section customer-products-section"
+    >
       {loadError && (
         <p className="mb-4 text-center text-base text-[#9f5f5f] sm:mb-6 sm:text-lg">
           {loadError}

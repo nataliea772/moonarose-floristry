@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   categoryHasSubcategories,
   SUBCATEGORY_FILTER_ALL,
@@ -98,6 +98,7 @@ export default function Home() {
   >(new Map());
   const [language, setLanguage] = useState<Language>("he");
   const [hasLoadedLanguage, setHasLoadedLanguage] = useState(false);
+  const previousSelectedCategoryRef = useRef<ProductCategory | null>(null);
 
   const t = getTranslations(language);
   const pageDirection = getTextDirection(language);
@@ -136,6 +137,26 @@ export default function Home() {
     setSelectedCategory(category);
     setSelectedSubcategory(SUBCATEGORY_FILTER_ALL);
   };
+
+  useEffect(() => {
+    if (!selectedCategory) {
+      previousSelectedCategoryRef.current = null;
+      return;
+    }
+
+    if (previousSelectedCategoryRef.current === selectedCategory) {
+      return;
+    }
+
+    previousSelectedCategoryRef.current = selectedCategory;
+
+    requestAnimationFrame(() => {
+      document.getElementById("customer-products-section")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }, [selectedCategory]);
 
   const categoryProducts = selectedCategory
     ? productsList.filter((product) => {
@@ -473,19 +494,6 @@ export default function Home() {
           />
         )}
 
-        <ComingSoonVanCard translations={t} />
-
-        <HowItWorksSection translations={t} />
-
-        <ConsultationCard
-          translations={t}
-          whatsappHref={consultationWhatsAppHref}
-        />
-
-        {!selectedCategory && !isLoading && (
-          <ChooseCategoryPromptSection translations={t} />
-        )}
-
         <ProductGrid
           isLoading={isLoading}
           loadError={loadError}
@@ -504,6 +512,19 @@ export default function Home() {
           onOpenGallery={openGallery}
           onOpenOrder={openOrderModal}
         />
+
+        <ComingSoonVanCard translations={t} />
+
+        <HowItWorksSection translations={t} />
+
+        <ConsultationCard
+          translations={t}
+          whatsappHref={consultationWhatsAppHref}
+        />
+
+        {!selectedCategory && !isLoading && (
+          <ChooseCategoryPromptSection translations={t} />
+        )}
       </section>
 
       {galleryProduct && galleryProduct.images.length > 0 && (
