@@ -38,6 +38,9 @@ import { LanguageSelect } from "@/components/customer/LanguageSelect";
 import { OrderModal } from "@/components/customer/OrderModal";
 import { ProductGrid } from "@/components/customer/ProductGrid";
 import { ComingSoonVanCard } from "@/components/customer/ComingSoonVanCard";
+import { HowItWorksSection } from "@/components/customer/HowItWorksSection";
+import { ConsultationCard } from "@/components/customer/ConsultationCard";
+import { ChooseCategoryPromptSection } from "@/components/customer/ChooseCategoryPromptSection";
 import { type CustomerProduct } from "@/components/customer/types";
 import {
   getAvailableDates,
@@ -428,6 +431,13 @@ export default function Home() {
         )
       : "";
 
+  const consultationWhatsAppHref = contactDetails.whatsapp.trim()
+    ? buildWhatsAppHref(
+        contactDetails.whatsapp,
+        t.consultationWhatsAppMessage
+      )
+    : "";
+
   return (
     <main className="boutique-page text-[#2f1f1b]" dir={pageDirection}>
       <LanguageSelect
@@ -436,7 +446,7 @@ export default function Home() {
         onLanguageChange={setLanguage}
       />
 
-      <section className="boutique-content mx-auto max-w-6xl px-4 py-4 sm:px-6 sm:py-12">
+      <section className="boutique-content mx-auto max-w-[73.75rem] px-4 py-4 sm:px-6 sm:py-12">
         <CustomerHero
           translations={t}
           phoneHref={phoneHref}
@@ -464,6 +474,17 @@ export default function Home() {
         )}
 
         <ComingSoonVanCard translations={t} />
+
+        <HowItWorksSection translations={t} />
+
+        <ConsultationCard
+          translations={t}
+          whatsappHref={consultationWhatsAppHref}
+        />
+
+        {!selectedCategory && !isLoading && (
+          <ChooseCategoryPromptSection translations={t} />
+        )}
 
         <ProductGrid
           isLoading={isLoading}

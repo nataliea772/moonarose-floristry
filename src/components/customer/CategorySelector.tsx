@@ -4,11 +4,7 @@ import {
   PRODUCT_CATEGORIES,
   type ProductCategory,
 } from "@/data/categories";
-import {
-  getCategoryDescription,
-  getCategoryLabel,
-  type Language,
-} from "@/lib/translations";
+import { getCategoryLabel, type Language } from "@/lib/translations";
 
 type CategorySelectorProps = {
   selectedCategory: ProductCategory | null;
@@ -24,7 +20,7 @@ export function CategorySelector({
   return (
     <section
       id="category-selector"
-      className="category-selector category-grid mb-5 sm:mb-16"
+      className="category-selector customer-category-pills"
       aria-label="Categories"
     >
       {PRODUCT_CATEGORIES.map((category) => {
@@ -34,16 +30,11 @@ export function CategorySelector({
           <button
             key={category}
             type="button"
-            className={`category-card ${isSelected ? "category-card-selected" : ""}`}
+            className={`category-pill ${isSelected ? "category-pill-selected" : ""}`}
             onClick={() => onSelectCategory(category)}
             aria-pressed={isSelected}
           >
-            <h2 className="category-card-title">
-              {getCategoryLabel(category, language)}
-            </h2>
-            <p className="category-card-desc">
-              {getCategoryDescription(category, language)}
-            </p>
+            {getCategoryLabel(category, language)}
           </button>
         );
       })}
