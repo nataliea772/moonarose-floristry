@@ -3,6 +3,7 @@
 import {
   isLanguage,
   LANGUAGE_OPTIONS,
+  getTranslations,
   type Language,
 } from "@/lib/translations";
 
@@ -17,6 +18,8 @@ export function LanguageSelect({
   pageDirection,
   onLanguageChange,
 }: LanguageSelectProps) {
+  const t = getTranslations(language);
+
   return (
     <div
       className={`boutique-topbar ${
@@ -34,7 +37,7 @@ export function LanguageSelect({
               onLanguageChange(nextLanguage);
             }
           }}
-          aria-label="Language"
+          aria-label={t.languageSelectAria}
         >
           {LANGUAGE_OPTIONS.map((option) => (
             <option key={option.code} value={option.code}>

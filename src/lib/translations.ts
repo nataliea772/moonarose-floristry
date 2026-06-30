@@ -197,6 +197,17 @@ export const translations = {
     whatsappHello: "שלום",
     envelopeIntroHint: "לחצי לפתיחה",
     envelopeIntroSkip: "דלגי",
+    skipToMainContent: "דלגי לתוכן המרכזי",
+    languageSelectAria: "בחירת שפה",
+    categoriesAriaLabel: "קטגוריות",
+    subcategoriesAriaLabel: "תת-קטגוריות",
+    accessibilityStatement: "הצהרת נגישות",
+    topSellerBadge: "Top Seller",
+    seasonalFlowersNote:
+      "הערה קטנה: סוגי הפרחים והגוונים עשויים להשתנות לפי עונה וזמינות. נשמור על אותו סגנון, צבעוניות ותחושה כללית של העיצוב.",
+    orderButtonAria: (name: string) => `להזמנה — ${name}`,
+    viewCategoriesAria: "צפייה בקטגוריות",
+    productsCarouselAria: "מוצרים בקטגוריה שנבחרה",
   },
   ar: {
     floralBoutique: "FLORAL BOUTIQUE",
@@ -287,6 +298,17 @@ export const translations = {
     whatsappHello: "مرحباً",
     envelopeIntroHint: "اضغطي للفتح",
     envelopeIntroSkip: "تخطي",
+    skipToMainContent: "تخطي إلى المحتوى الرئيسي",
+    languageSelectAria: "اختيار اللغة",
+    categoriesAriaLabel: "الفئات",
+    subcategoriesAriaLabel: "الفئات الفرعية",
+    accessibilityStatement: "بيان إمكانية الوصول",
+    topSellerBadge: "Top Seller",
+    seasonalFlowersNote:
+      "ملاحظة صغيرة: قد تختلف أنواع الزهور ودرجات الألوان حسب الموسم والتوفر. سنحافظ على نفس الأسلوب، الألوان والإحساس العام للتنسيق.",
+    orderButtonAria: (name: string) => `للطلب — ${name}`,
+    viewCategoriesAria: "عرض الفئات",
+    productsCarouselAria: "منتجات الفئة المختارة",
   },
   en: {
     floralBoutique: "FLORAL BOUTIQUE",
@@ -378,6 +400,17 @@ export const translations = {
     whatsappHello: "Hello",
     envelopeIntroHint: "Click to open",
     envelopeIntroSkip: "Skip",
+    skipToMainContent: "Skip to main content",
+    languageSelectAria: "Language selection",
+    categoriesAriaLabel: "Categories",
+    subcategoriesAriaLabel: "Subcategories",
+    accessibilityStatement: "Accessibility statement",
+    topSellerBadge: "Top Seller",
+    seasonalFlowersNote:
+      "Small note: flower types and shades may vary by season and availability. We’ll keep the same style, color palette and overall feeling of the design.",
+    orderButtonAria: (name: string) => `Order — ${name}`,
+    viewCategoriesAria: "View categories",
+    productsCarouselAria: "Products in selected category",
   },
 } as const;
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getTextDirection, getTranslations, type Language } from "@/lib/translations";
 
 const ENVELOPE_INTRO_STORAGE_KEY = "moonarose_envelope_intro_seen";
@@ -30,6 +30,7 @@ function markIntroSeen(): void {
 
 export function EnvelopeIntro({ language }: EnvelopeIntroProps) {
   const [phase, setPhase] = useState<IntroPhase>("checking");
+  const skipButtonRef = useRef<HTMLButtonElement>(null);
   const t = getTranslations(language);
   const direction = getTextDirection(language);
 
@@ -48,6 +49,14 @@ export function EnvelopeIntro({ language }: EnvelopeIntroProps) {
     }
 
     document.body.style.overflow = "";
+  }, [phase]);
+
+  useEffect(() => {
+    if (phase !== "visible") {
+      return;
+    }
+
+    skipButtonRef.current?.focus();
   }, [phase]);
 
   const closeIntro = useCallback(() => {
@@ -78,8 +87,10 @@ export function EnvelopeIntro({ language }: EnvelopeIntroProps) {
       aria-label={t.envelopeIntroHint}
     >
       <button
+        ref={skipButtonRef}
         type="button"
         className="envelope-intro-skip"
+        aria-label={t.envelopeIntroSkip}
         onClick={(event) => {
           event.stopPropagation();
           closeIntro();
@@ -94,18 +105,18 @@ export function EnvelopeIntro({ language }: EnvelopeIntroProps) {
         onClick={closeIntro}
         aria-label={t.envelopeIntroHint}
       >
-        <div className="envelope-fullscreen">
-          <div className="envelope-paper-base" aria-hidden="true">
+        <div className="envelope-fullscreen" aria-hidden="true">
+          <div className="envelope-paper-base">
             <div className="envelope-paper-texture" />
             <div className="envelope-paper-vignette" />
           </div>
 
-          <div className="envelope-left-fold" aria-hidden="true" />
-          <div className="envelope-right-fold" aria-hidden="true" />
-          <div className="envelope-bottom-flap" aria-hidden="true" />
-          <div className="envelope-top-flap" aria-hidden="true" />
+          <div className="envelope-left-fold" />
+          <div className="envelope-right-fold" />
+          <div className="envelope-bottom-flap" />
+          <div className="envelope-top-flap" />
 
-          <div className="envelope-crease-lines" aria-hidden="true">
+          <div className="envelope-crease-lines">
             <span className="envelope-crease-line envelope-crease-tl" />
             <span className="envelope-crease-line envelope-crease-tr" />
             <span className="envelope-crease-line envelope-crease-bl" />
@@ -113,7 +124,7 @@ export function EnvelopeIntro({ language }: EnvelopeIntroProps) {
           </div>
 
           <div className="envelope-seal-stack">
-            <div className="envelope-wax-seal" aria-hidden="true">
+            <div className="envelope-wax-seal">
               <span className="envelope-wax-seal-mark">Moonarośe</span>
             </div>
             <p className="envelope-hint">{t.envelopeIntroHint}</p>

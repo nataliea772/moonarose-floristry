@@ -264,6 +264,23 @@ export function ProductsTab({
               />
             </FormField>
 
+            <FormField label="Top Seller">
+              <label className="admin-checkbox-field">
+                <input
+                  type="checkbox"
+                  className="admin-checkbox-input"
+                  checked={productForm.isTopSeller}
+                  onChange={(event) =>
+                    onProductFormChange((previous) => ({
+                      ...previous,
+                      isTopSeller: event.target.checked,
+                    }))
+                  }
+                />
+                <span>Top Seller</span>
+              </label>
+            </FormField>
+
             <FormField label="תמונות מוצר" className="admin-form-grid-span-2">
               <input
                 type="file"
@@ -372,9 +389,14 @@ export function ProductsTab({
                 )}
               </div>
               <div className="admin-product-body">
-                <h4 className="admin-product-name">
-                  {getAdminProductHebrewName(product)}
-                </h4>
+                <div className="admin-product-title-row">
+                  <h4 className="admin-product-name">
+                    {getAdminProductHebrewName(product)}
+                  </h4>
+                  {product.isTopSeller && (
+                    <span className="admin-top-seller-badge">Top Seller</span>
+                  )}
+                </div>
                 <p className="admin-product-meta">
                   {product.category}
                   {product.subcategory ? ` · ${product.subcategory}` : ""}

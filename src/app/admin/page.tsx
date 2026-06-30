@@ -700,6 +700,7 @@ export default function AdminPage() {
           subcategory: subcategoryPayload,
           price,
           preparation_days: preparationDays,
+          is_top_seller: productForm.isTopSeller,
         })
         .eq("id", editingProductId);
 
@@ -799,6 +800,7 @@ export default function AdminPage() {
           preparation_days: preparationDays,
           image_url: null,
           is_active: true,
+          is_top_seller: productForm.isTopSeller,
         })
         .select("id")
         .single();
@@ -1009,6 +1011,11 @@ export default function AdminPage() {
 
         <AdminTabs selectedTab={selectedTab} onSelectTab={setSelectedTab} />
 
+        <div
+          id="admin-tab-panel"
+          role="tabpanel"
+          aria-labelledby={`admin-tab-${selectedTab}`}
+        >
         {selectedTab === "מוצרים" && (
           <ProductsTab
             categoryProducts={categoryProducts}
@@ -1119,6 +1126,7 @@ export default function AdminPage() {
             onDeleteReview={handleDeleteReview}
           />
         )}
+        </div>
       </div>
     </main>
   );

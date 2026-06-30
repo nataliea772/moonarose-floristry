@@ -4,7 +4,7 @@ import {
   PRODUCT_CATEGORIES,
   type ProductCategory,
 } from "@/data/categories";
-import { getCategoryLabel, type Language } from "@/lib/translations";
+import { getCategoryLabel, getTranslations, type Language } from "@/lib/translations";
 
 type CategorySelectorProps = {
   selectedCategory: ProductCategory | null;
@@ -17,13 +17,14 @@ export function CategorySelector({
   language,
   onSelectCategory,
 }: CategorySelectorProps) {
+  const t = getTranslations(language);
+
   return (
     <section
       id="category-selector"
       className="category-selector customer-category-pills"
-      aria-label="Categories"
-    >
-      {PRODUCT_CATEGORIES.map((category) => {
+      aria-label={t.categoriesAriaLabel}
+    >      {PRODUCT_CATEGORIES.map((category) => {
         const isSelected = selectedCategory === category;
 
         return (

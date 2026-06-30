@@ -49,6 +49,7 @@ import {
   mapSupabaseProduct,
   mapSupabaseReview,
   parseDateFromKey,
+  sortProductsWithTopSellersFirst,
   toClosedDateKey,
   type SupabaseClosedDateRow,
   type SupabaseContactRow,
@@ -128,6 +129,11 @@ export default function Home() {
     localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
   }, [language, hasLoadedLanguage]);
 
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.documentElement.dir = pageDirection;
+  }, [language, pageDirection]);
+
   const handleSelectCategory = (category: ProductCategory) => {
     if (selectedCategory === category) {
       setSelectedCategory(null);
@@ -160,21 +166,23 @@ export default function Home() {
   }, [selectedCategory]);
 
   const categoryProducts = selectedCategory
-    ? productsList.filter((product) => {
-        if (product.category !== selectedCategory) {
-          return false;
-        }
+    ? sortProductsWithTopSellersFirst(
+        productsList.filter((product) => {
+          if (product.category !== selectedCategory) {
+            return false;
+          }
 
-        if (!categoryHasSubcategories(selectedCategory)) {
-          return true;
-        }
+          if (!categoryHasSubcategories(selectedCategory)) {
+            return true;
+          }
 
-        if (selectedSubcategory === SUBCATEGORY_FILTER_ALL) {
-          return true;
-        }
+          if (selectedSubcategory === SUBCATEGORY_FILTER_ALL) {
+            return true;
+          }
 
-        return product.subcategory === selectedSubcategory;
-      })
+          return product.subcategory === selectedSubcategory;
+        })
+      )
     : [];
 
   const availableDates = orderProduct
@@ -461,7 +469,15 @@ export default function Home() {
     : "";
 
   return (
-    <main className="boutique-page text-[#2f1f1b]" dir={pageDirection}>
+    <main
+      className="boutique-page text-[#2f1f1b]"
+      dir={pageDirection}
+      lang={language}
+    >
+      <a href="#main-content" className="skip-to-main">
+        {t.skipToMainContent}
+      </a>
+
       <EnvelopeIntro language={language} />
 
       <LanguageSelect
@@ -470,7 +486,11 @@ export default function Home() {
         onLanguageChange={setLanguage}
       />
 
-      <section className="boutique-content mx-auto max-w-[73.75rem] px-4 py-4 sm:px-6 sm:py-12">
+      <section
+        id="main-content"
+        className="boutique-content mx-auto max-w-[73.75rem] px-4 py-4 sm:px-6 sm:py-12"
+        tabIndex={-1}
+      >
         <CustomerHero
           translations={t}
           phoneHref={phoneHref}

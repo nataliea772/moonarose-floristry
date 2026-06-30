@@ -9,6 +9,7 @@ export type AdminProduct = ProductTranslationFields & {
   subcategory: ProductSubcategory | null;
   price: number;
   preparationDays: number;
+  isTopSeller: boolean;
   images: ProductImageRecord[];
   image: string;
 };
@@ -68,6 +69,7 @@ export type ProductFormState = {
   descriptionEn: string;
   price: string;
   preparationDays: string;
+  isTopSeller: boolean;
 };
 
 export type PendingImagePreview = {

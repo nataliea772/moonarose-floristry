@@ -99,6 +99,101 @@ body {
   z-index: 0;
 }
 
+.skip-to-main {
+  position: absolute;
+  top: 0.75rem;
+  inset-inline-start: 0.75rem;
+  z-index: 200;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(201, 147, 147, 0.45);
+  border-radius: 999px;
+  background: rgba(255, 252, 250, 0.98);
+  color: #5a3731;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(120, 70, 60, 0.12);
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+
+.skip-to-main:focus {
+  transform: translateY(0);
+  outline: 2px solid rgba(159, 95, 95, 0.75);
+  outline-offset: 3px;
+}
+
+.boutique-page :focus-visible {
+  outline: 2px solid rgba(159, 95, 95, 0.72);
+  outline-offset: 3px;
+}
+
+.boutique-page .language-select:focus-visible,
+.boutique-page .order-form-input:focus-visible {
+  outline: 2px solid rgba(159, 95, 95, 0.72);
+  outline-offset: 2px;
+}
+
+.boutique-page .contact-icon-btn:focus-visible,
+.boutique-page .category-pill:focus-visible,
+.boutique-page .subcategory-chip:focus-visible,
+.boutique-page .customer-products-carousel-arrow:focus-visible,
+.boutique-page .customer-products-carousel-view-all:focus-visible,
+.boutique-page .customer-consultation-button:focus-visible,
+.boutique-page .gallery-nav-btn:focus-visible,
+.boutique-page .contact-btn:focus-visible,
+.envelope-intro-skip:focus-visible,
+.envelope-intro-trigger:focus-visible {
+  outline: 2px solid rgba(159, 95, 95, 0.72);
+  outline-offset: 3px;
+}
+
+.customer-seasonal-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(201, 147, 147, 0.28);
+  border-radius: 1rem;
+  background: rgba(255, 250, 247, 0.92);
+  color: #6f524c;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.customer-seasonal-note-modal {
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+.customer-seasonal-note-mark {
+  flex-shrink: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.35rem;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, #f6d4cc 0%, #c99393 100%);
+  box-shadow: 0 0 0 2px rgba(201, 147, 147, 0.18);
+}
+
+.product-top-seller-badge {
+  position: absolute;
+  top: 0.85rem;
+  inset-inline-start: 0.85rem;
+  z-index: 2;
+  padding: 0.22rem 0.55rem;
+  border: 1px solid rgba(201, 147, 147, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 250, 247, 0.94);
+  color: #7a5048;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .boutique-topbar {
   position: relative;
   z-index: 2;
@@ -208,7 +303,7 @@ body {
 
 .hero-eyebrow {
   letter-spacing: 0.32em;
-  color: #b47b7b;
+  color: #9f6868;
   font-size: 0.72rem;
   font-weight: 600;
 }
@@ -1570,6 +1665,7 @@ body {
     box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   display: flex;
   flex-direction: column;
+  position: relative;
   width: 100%;
   max-width: 24rem;
   margin-left: auto;
@@ -1829,6 +1925,11 @@ body {
 .order-modal-close:hover {
   border-color: #c99393;
   background: #fff;
+}
+
+.order-modal-close:focus-visible {
+  outline: 2px solid rgba(159, 95, 95, 0.72);
+  outline-offset: 2px;
 }
 
 .order-modal-body {
@@ -3320,6 +3421,11 @@ body {
   display: none;
 }
 
+.customer-products-carousel-arrow:focus-visible {
+  outline: 2px solid rgba(159, 95, 95, 0.72);
+  outline-offset: 2px;
+}
+
 @media (min-width: 640px) {
   .customer-products-carousel-arrow {
     display: inline-flex;
@@ -3850,6 +3956,14 @@ body {
   box-shadow: 0 8px 22px rgba(120, 70, 60, 0.12);
 }
 
+.admin-tab:focus-visible,
+.admin-page .admin-btn-secondary:focus-visible,
+.admin-page .admin-input:focus-visible,
+.admin-page .contact-btn:focus-visible {
+  outline: 2px solid rgba(159, 95, 95, 0.72);
+  outline-offset: 2px;
+}
+
 .admin-panel {
   border: 1px solid rgba(236, 209, 200, 0.95);
   border-radius: 1.75rem;
@@ -4147,8 +4261,47 @@ body {
   flex: 1;
 }
 
-.admin-product-name {
+.admin-product-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
   margin-bottom: 0.35rem;
+}
+
+.admin-top-seller-badge {
+  padding: 0.18rem 0.5rem;
+  border: 1px solid rgba(201, 147, 147, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 250, 247, 0.95);
+  color: #7a5048;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.admin-checkbox-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #5a4540;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.admin-checkbox-input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: #9f5f5f;
+}
+
+.admin-checkbox-input:focus-visible {
+  outline: 2px solid rgba(159, 95, 95, 0.72);
+  outline-offset: 2px;
+}
+
+.admin-product-name {
+  margin-bottom: 0;
   font-size: 1.15rem;
   font-weight: 700;
   color: #3b2521;

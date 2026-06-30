@@ -43,6 +43,7 @@ export type SupabaseProductRow = {
   description_ar?: string | null;
   name_en?: string | null;
   description_en?: string | null;
+  is_top_seller?: boolean | null;
 };
 
 export type SupabaseClosedDateRow = {
@@ -212,6 +213,7 @@ export function mapSupabaseProduct(
     ...mapProductTranslationFields(row),
     price: Number(row.price),
     preparationDays: row.preparation_days,
+    isTopSeller: Boolean(row.is_top_seller),
     images: productImages,
     image: imageUrls[0] ?? "",
   };
@@ -257,6 +259,7 @@ export function emptyProductForm(
     descriptionEn: "",
     price: "",
     preparationDays: "",
+    isTopSeller: false,
   };
 }
 
@@ -304,6 +307,7 @@ export function productToFormState(product: AdminProduct): ProductFormState {
     descriptionEn: product.descriptionEn ?? "",
     price: String(product.price),
     preparationDays: String(product.preparationDays),
+    isTopSeller: product.isTopSeller,
   };
 }
 

@@ -26,6 +26,7 @@ export type SupabaseProductRow = {
   description_ar?: string | null;
   name_en?: string | null;
   description_en?: string | null;
+  is_top_seller?: boolean | null;
 };
 
 export type SupabaseClosedDateRow = {
@@ -78,9 +79,22 @@ export function mapDefaultProducts(): CustomerProduct[] {
     description: product.description,
     price: product.price,
     preparationDays: product.preparationDays,
+    isTopSeller: false,
     images: product.image ? [product.image] : [],
     image: product.image,
   }));
+}
+
+export function sortProductsWithTopSellersFirst(
+  products: CustomerProduct[]
+): CustomerProduct[] {
+  return [...products].sort((left, right) => {
+    if (left.isTopSeller === right.isTopSeller) {
+      return 0;
+    }
+
+    return left.isTopSeller ? -1 : 1;
+  });
 }
 
 export function mapSupabaseProduct(
@@ -102,6 +116,7 @@ export function mapSupabaseProduct(
     ...mapProductTranslationFields(row),
     price: Number(row.price),
     preparationDays: row.preparation_days,
+    isTopSeller: Boolean(row.is_top_seller),
     images,
     image: images[0] ?? "",
   };

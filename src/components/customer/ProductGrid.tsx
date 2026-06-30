@@ -137,6 +137,7 @@ export function ProductGrid({
         <div
           key={productRevealKey ?? "products"}
           className="customer-products-carousel-panel"
+          aria-label={t.productsCarouselAria}
         >
           <div className="customer-products-carousel-header">
             <h2 className="customer-products-carousel-title">
@@ -146,10 +147,16 @@ export function ProductGrid({
               type="button"
               className="customer-products-carousel-view-all"
               onClick={onBackToCategories}
+              aria-label={t.viewCategoriesAria}
             >
               {t.viewAllProducts}
             </button>
           </div>
+
+          <p className="customer-seasonal-note">
+            <span className="customer-seasonal-note-mark" aria-hidden="true" />
+            {t.seasonalFlowersNote}
+          </p>
 
           <div className="customer-products-carousel-shell">
             <button

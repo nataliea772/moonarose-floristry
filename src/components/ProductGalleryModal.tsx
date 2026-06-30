@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { ProductImage } from "@/components/ProductImage";
+import { useModalA11y } from "@/lib/useModalA11y";
 
 export type GalleryLabels = {
   close: string;
@@ -33,32 +34,36 @@ export function ProductGalleryModal({
 }: ProductGalleryModalProps) {
   const hasMultiple = images.length > 1;
   const currentImage = images[currentIndex] ?? "";
+  const panelRef = useModalA11y(true, onClose);
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
+    if (!hasMultiple) {
+      return;
+    }
 
-      if (event.key === "ArrowRight" && hasMultiple) {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowRight") {
         onPrevious();
       }
 
-      if (event.key === "ArrowLeft" && hasMultiple) {
+      if (event.key === "ArrowLeft") {
         onNext();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [hasMultiple, onClose, onNext, onPrevious]);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [hasMultiple, onNext, onPrevious]);
 
   return (
     <div
       className="order-modal-overlay fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-5"
       role="dialog"
       aria-modal="true"
-      aria-label={labels.galleryTitle(productName)}
+      aria-labelledby="gallery-modal-title"
     >
       <button
         type="button"
@@ -67,14 +72,20 @@ export function ProductGalleryModal({
         onClick={onClose}
       />
 
-      <div className="gallery-modal-card relative flex w-full max-w-3xl flex-col overflow-hidden">
+      <div
+        ref={panelRef}
+        className="gallery-modal-card relative flex w-full max-w-3xl flex-col overflow-hidden"
+      >
         <div className="flex items-center justify-between gap-3 border-b border-[#ecd1c8]/80 px-4 py-3.5 sm:px-5">
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-[#3b2521]">
-              {productName}
+            <p
+              id="gallery-modal-title"
+              className="truncate text-sm font-semibold text-[#3b2521]"
+            >
+              {labels.galleryTitle(productName)}
             </p>
             {hasMultiple && (
-              <p className="text-xs text-[#755d56]">
+              <p className="text-xs text-[#6f524c]" aria-live="polite">
                 {currentIndex + 1} / {images.length}
               </p>
             )}
@@ -83,6 +94,7 @@ export function ProductGalleryModal({
             type="button"
             className="contact-btn min-h-11 shrink-0 px-5 py-2.5 text-sm"
             onClick={onClose}
+            aria-label={labels.close}
           >
             {labels.close}
           </button>
@@ -121,7 +133,7 @@ export function ProductGalleryModal({
         </div>
 
         {hasMultiple && (
-          <div className="flex justify-center gap-2 px-4 py-4">
+          <div className="flex justify-center gap-2 px-4 py-4" aria-hidden="true">
             {images.map((_, index) => (
               <span
                 key={index}
@@ -130,7 +142,6 @@ export function ProductGalleryModal({
                     ? "gallery-dot-active"
                     : "gallery-dot-inactive"
                 }`}
-                aria-hidden="true"
               />
             ))}
           </div>

@@ -4,6 +4,7 @@ import { ProductImage } from "@/components/ProductImage";
 import { type CustomerProduct } from "@/components/customer/types";
 import { toDateKey } from "@/components/customer/utils";
 import { getLocalizedProductName } from "@/lib/productTranslations";
+import { useModalA11y } from "@/lib/useModalA11y";
 import { getCategoryLabel, getTranslations, type Language } from "@/lib/translations";
 
 type CustomerTranslations = ReturnType<typeof getTranslations>;
@@ -57,6 +58,11 @@ export function OrderModal({
   onBackToDate,
   onSubmitOrder,
 }: OrderModalProps) {
+  const panelRef = useModalA11y(true, onClose);
+  const hasFormError = orderFormError.length > 0;
+  const dateErrorId = "order-date-error";
+  const detailsErrorId = "order-details-error";
+
   return (
     <div
       className="order-modal-overlay fixed inset-0 z-50 flex items-end justify-center p-3 sm:items-center sm:p-4"
@@ -70,7 +76,10 @@ export function OrderModal({
         aria-hidden="true"
       />
 
-      <div className="order-modal-card relative max-h-[92vh] w-full max-w-md overflow-x-hidden overflow-y-auto">
+      <div
+        ref={panelRef}
+        className="order-modal-card relative max-h-[92vh] w-full max-w-md overflow-x-hidden overflow-y-auto"
+      >
         <div className="order-modal-topbar">
           {!orderSuccess && (
             <span className="order-modal-step">{t.orderStep(orderStep)}</span>
@@ -86,7 +95,11 @@ export function OrderModal({
         </div>
 
         {orderSuccess ? (
-          <div className="order-modal-body order-success-view">
+          <div
+            className="order-modal-body order-success-view"
+            role="status"
+            aria-live="polite"
+          >
             <div className="order-success-emblem" aria-hidden="true">
               <span className="order-success-moon" />
               <span className="order-success-petal" />
@@ -131,11 +144,14 @@ export function OrderModal({
 
             <p className="order-notice">{t.sameDayNotice}</p>
 
-            <label className="order-form-field">
+            <label className="order-form-field" htmlFor="order-date-select">
               <span className="order-form-label">{t.dateSelectLabel}</span>
               <select
+                id="order-date-select"
                 className="order-form-input order-date-select"
                 value={selectedDateKey}
+                aria-invalid={hasFormError && !selectedDateKey}
+                aria-describedby={hasFormError ? dateErrorId : undefined}
                 onChange={(event) => {
                   onSelectedDateKeyChange(event.target.value);
                 }}
@@ -156,7 +172,9 @@ export function OrderModal({
             </label>
 
             {orderFormError && (
-              <p className="order-form-error">{orderFormError}</p>
+              <p id={dateErrorId} className="order-form-error" role="alert">
+                {orderFormError}
+              </p>
             )}
 
             <div className="order-modal-actions">
@@ -168,7 +186,9 @@ export function OrderModal({
         ) : (
           <div className="order-modal-body">
             <p className="order-modal-eyebrow">{t.stepTwoEyebrow}</p>
-            <h2 className="order-step-title">{t.orderDetailsTitle}</h2>
+            <h2 id="order-modal-title" className="order-step-title">
+              {t.orderDetailsTitle}
+            </h2>
 
             {selectedDate && (
               <div className="order-selected-date">
@@ -180,12 +200,15 @@ export function OrderModal({
             )}
 
             <div className="order-form-fields">
-              <label className="order-form-field">
+              <label className="order-form-field" htmlFor="order-customer-name">
                 <span className="order-form-label">{t.fullName}</span>
                 <input
+                  id="order-customer-name"
                   type="text"
                   className="order-form-input"
                   value={customerName}
+                  aria-invalid={hasFormError && !customerName.trim()}
+                  aria-describedby={hasFormError ? detailsErrorId : undefined}
                   onChange={(event) => {
                     onCustomerNameChange(event.target.value);
                   }}
@@ -194,12 +217,15 @@ export function OrderModal({
                 />
               </label>
 
-              <label className="order-form-field">
+              <label className="order-form-field" htmlFor="order-customer-phone">
                 <span className="order-form-label">{t.phoneLabel}</span>
                 <input
+                  id="order-customer-phone"
                   type="tel"
                   className="order-form-input"
                   value={customerPhone}
+                  aria-invalid={hasFormError && !customerPhone.trim()}
+                  aria-describedby={hasFormError ? detailsErrorId : undefined}
                   onChange={(event) => {
                     onCustomerPhoneChange(event.target.value);
                   }}
@@ -209,9 +235,10 @@ export function OrderModal({
                 />
               </label>
 
-              <label className="order-form-field">
+              <label className="order-form-field" htmlFor="order-notes">
                 <span className="order-form-label">{t.orderNotes}</span>
                 <textarea
+                  id="order-notes"
                   className="order-form-input order-form-textarea"
                   value={orderNotes}
                   onChange={(event) => onOrderNotesChange(event.target.value)}
@@ -222,8 +249,15 @@ export function OrderModal({
             </div>
 
             {orderFormError && (
-              <p className="order-form-error">{orderFormError}</p>
+              <p id={detailsErrorId} className="order-form-error" role="alert">
+                {orderFormError}
+              </p>
             )}
+
+            <p className="customer-seasonal-note customer-seasonal-note-modal">
+              <span className="customer-seasonal-note-mark" aria-hidden="true" />
+              {t.seasonalFlowersNote}
+            </p>
 
             <div className="order-modal-actions">
               <button

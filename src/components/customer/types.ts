@@ -10,6 +10,7 @@ export type CustomerProduct = ProductTranslationFields & {
   subcategory: ProductSubcategory | null;
   price: number;
   preparationDays: number;
+  isTopSeller: boolean;
   images: string[];
   image: string;
 };

@@ -52,6 +52,7 @@ export function ConsultationCard({
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={t.consultationWhatsApp}
               >
                 <WhatsAppIcon className="customer-consultation-button-icon" />
                 <span>{t.consultationWhatsApp}</span>

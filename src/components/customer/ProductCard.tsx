@@ -34,6 +34,10 @@ export function ProductCard({
 
   return (
     <article className="product-card">
+      {product.isTopSeller && (
+        <span className="product-top-seller-badge">Top Seller</span>
+      )}
+
       {product.images.length > 0 ? (
         <button
           type="button"
@@ -78,6 +82,7 @@ export function ProductCard({
         type="button"
         className="order-btn"
         onClick={() => onOpenOrder(product)}
+        aria-label={t.orderButtonAria(displayName)}
       >
         {t.orderButton}
       </button>
