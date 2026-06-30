@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { getTextDirection, getTranslations, type Language } from "@/lib/translations";
 
 const ENVELOPE_INTRO_STORAGE_KEY = "moonarose_envelope_intro_seen";
-const OPEN_ANIMATION_MS = 1100;
+const OPEN_ANIMATION_MS = 1400;
 
 type EnvelopeIntroProps = {
   language: Language;
@@ -71,7 +71,7 @@ export function EnvelopeIntro({ language }: EnvelopeIntroProps) {
 
   return (
     <div
-      className={`envelope-intro ${isOpening ? "envelope-intro-opening" : ""}`}
+      className={`envelope-intro ${isOpening ? "envelope-intro-opening envelope-open" : ""}`}
       dir={direction}
       role="dialog"
       aria-modal="true"
@@ -94,24 +94,29 @@ export function EnvelopeIntro({ language }: EnvelopeIntroProps) {
         onClick={closeIntro}
         aria-label={t.envelopeIntroHint}
       >
-        <div className="envelope-intro-card">
-          <div className="envelope-intro-bloom" aria-hidden="true" />
+        <div className="envelope-fullscreen">
+          <div className="envelope-paper-base" aria-hidden="true">
+            <div className="envelope-paper-texture" />
+            <div className="envelope-paper-vignette" />
+          </div>
 
-          <div className="envelope-intro-envelope">
-            <div className="envelope-body">
-              <div className="envelope-texture" aria-hidden="true" />
-              <div className="envelope-paper" aria-hidden="true" />
-              <div className="envelope-fold envelope-fold-left" aria-hidden="true" />
-              <div className="envelope-fold envelope-fold-right" aria-hidden="true" />
-              <div className="envelope-fold envelope-fold-bottom" aria-hidden="true" />
-              <div className="envelope-flap" aria-hidden="true" />
-              <div className="envelope-seal-wrap">
-                <div className="envelope-seal" aria-hidden="true">
-                  <span className="envelope-seal-mark">m</span>
-                </div>
-                <p className="envelope-seal-hint">{t.envelopeIntroHint}</p>
-              </div>
+          <div className="envelope-left-fold" aria-hidden="true" />
+          <div className="envelope-right-fold" aria-hidden="true" />
+          <div className="envelope-bottom-flap" aria-hidden="true" />
+          <div className="envelope-top-flap" aria-hidden="true" />
+
+          <div className="envelope-crease-lines" aria-hidden="true">
+            <span className="envelope-crease-line envelope-crease-tl" />
+            <span className="envelope-crease-line envelope-crease-tr" />
+            <span className="envelope-crease-line envelope-crease-bl" />
+            <span className="envelope-crease-line envelope-crease-br" />
+          </div>
+
+          <div className="envelope-seal-stack">
+            <div className="envelope-wax-seal" aria-hidden="true">
+              <span className="envelope-wax-seal-mark">Moonarośe</span>
             </div>
+            <p className="envelope-hint">{t.envelopeIntroHint}</p>
           </div>
         </div>
       </button>
