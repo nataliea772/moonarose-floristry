@@ -41,6 +41,7 @@ import { ComingSoonVanCard } from "@/components/customer/ComingSoonVanCard";
 import { HowItWorksSection } from "@/components/customer/HowItWorksSection";
 import { ConsultationCard } from "@/components/customer/ConsultationCard";
 import { ChooseCategoryPromptSection } from "@/components/customer/ChooseCategoryPromptSection";
+import { EnvelopeIntro } from "@/components/customer/EnvelopeIntro";
 import { type CustomerProduct } from "@/components/customer/types";
 import {
   getAvailableDates,
@@ -461,6 +462,8 @@ export default function Home() {
 
   return (
     <main className="boutique-page text-[#2f1f1b]" dir={pageDirection}>
+      <EnvelopeIntro language={language} />
+
       <LanguageSelect
         language={language}
         pageDirection={pageDirection}

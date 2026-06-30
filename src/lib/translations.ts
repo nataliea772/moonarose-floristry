@@ -195,6 +195,8 @@ export const translations = {
     validationPhone: "נא למלא מספר טלפון",
     orderSubmitError: "לא הצלחנו לשלוח את ההזמנה כרגע",
     whatsappHello: "שלום",
+    envelopeIntroHint: "לחצי לפתיחה",
+    envelopeIntroSkip: "דלגי",
   },
   ar: {
     floralBoutique: "FLORAL BOUTIQUE",
@@ -283,6 +285,8 @@ export const translations = {
     validationPhone: "يرجى إدخال رقم الهاتف",
     orderSubmitError: "لم نتمكن من إرسال الطلب حالياً",
     whatsappHello: "مرحباً",
+    envelopeIntroHint: "اضغطي للفتح",
+    envelopeIntroSkip: "تخطي",
   },
   en: {
     floralBoutique: "FLORAL BOUTIQUE",
@@ -372,6 +376,8 @@ export const translations = {
     validationPhone: "Please enter your phone number",
     orderSubmitError: "We couldn't send the order right now",
     whatsappHello: "Hello",
+    envelopeIntroHint: "Click to open",
+    envelopeIntroSkip: "Skip",
   },
 } as const;
 

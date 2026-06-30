@@ -3350,6 +3350,324 @@ body {
   }
 }
 
+/* ── Customer envelope intro (scoped) ── */
+.envelope-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 252, 250, 0.95) 0%, transparent 52%),
+    radial-gradient(circle at 18% 82%, rgba(252, 238, 234, 0.55) 0%, transparent 42%),
+    radial-gradient(circle at 82% 78%, rgba(247, 232, 226, 0.45) 0%, transparent 40%),
+    linear-gradient(180deg, #fffaf8 0%, #fceeea 48%, #f7e8e2 100%);
+  transition: opacity 0.55s ease, visibility 0.55s ease;
+}
+
+.envelope-intro-opening {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.envelope-intro-skip {
+  position: absolute;
+  top: 1rem;
+  inset-inline-end: 1rem;
+  z-index: 2;
+  border: 1px solid rgba(201, 147, 147, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 252, 250, 0.88);
+  color: #755d56;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.38rem 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(201, 147, 147, 0.1);
+}
+
+.envelope-intro-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 24rem;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.envelope-intro-card {
+  position: relative;
+  width: 100%;
+  animation: envelope-intro-float 4.8s ease-in-out infinite;
+}
+
+.envelope-intro-bloom {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  width: 16rem;
+  height: 16rem;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 242, 238, 0.92) 0%,
+    rgba(201, 147, 147, 0.2) 44%,
+    transparent 72%
+  );
+  transform: translate(-50%, -50%) scale(0.62);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.85s ease,
+    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.envelope-intro-opening .envelope-intro-bloom {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.envelope-intro-envelope {
+  position: relative;
+  width: min(19rem, 82vw);
+  margin: 0 auto;
+  perspective: 960px;
+}
+
+.envelope-body {
+  position: relative;
+  height: min(11.75rem, 46vw);
+  min-height: 10.5rem;
+  border-radius: 0.65rem;
+  background:
+    linear-gradient(165deg, #fff9f7 0%, #f6e4de 38%, #efcfc7 100%);
+  border: 1px solid rgba(201, 147, 147, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -18px 28px rgba(201, 147, 147, 0.06),
+    0 22px 44px rgba(90, 55, 49, 0.14),
+    0 8px 18px rgba(201, 147, 147, 0.1);
+  overflow: hidden;
+}
+
+.envelope-texture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.05) 0 1px,
+      transparent 1px 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(201, 147, 147, 0.035) 0 1px,
+      transparent 1px 5px
+    ),
+    radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.35) 0%, transparent 34%),
+    radial-gradient(circle at 82% 88%, rgba(201, 147, 147, 0.08) 0%, transparent 38%);
+  pointer-events: none;
+}
+
+.envelope-paper {
+  position: absolute;
+  inset: 1.35rem 1.1rem 1rem;
+  border-radius: 0.35rem;
+  background: linear-gradient(180deg, rgba(255, 253, 251, 0.92) 0%, rgba(252, 238, 234, 0.72) 100%);
+  border: 1px solid rgba(201, 147, 147, 0.12);
+  transform: translateY(0.45rem);
+  transition: transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.envelope-intro-opening .envelope-paper {
+  transform: translateY(-0.1rem);
+}
+
+.envelope-fold {
+  position: absolute;
+  pointer-events: none;
+}
+
+.envelope-fold-left {
+  bottom: 0;
+  left: 0;
+  width: 52%;
+  height: 62%;
+  background: linear-gradient(148deg, rgba(255, 250, 248, 0.15) 0%, rgba(228, 190, 182, 0.34) 100%);
+  clip-path: polygon(0 100%, 0 8%, 50% 52%);
+  border-right: 1px solid rgba(183, 130, 120, 0.16);
+}
+
+.envelope-fold-right {
+  bottom: 0;
+  right: 0;
+  width: 52%;
+  height: 62%;
+  background: linear-gradient(212deg, rgba(255, 250, 248, 0.12) 0%, rgba(228, 190, 182, 0.3) 100%);
+  clip-path: polygon(100% 100%, 100% 8%, 50% 52%);
+  border-left: 1px solid rgba(183, 130, 120, 0.14);
+}
+
+.envelope-fold-bottom {
+  bottom: 0;
+  left: 50%;
+  width: 58%;
+  height: 42%;
+  background: linear-gradient(180deg, rgba(244, 221, 213, 0.28) 0%, rgba(235, 200, 192, 0.42) 100%);
+  clip-path: polygon(0 100%, 50% 18%, 100% 100%);
+  transform: translateX(-50%);
+  border-top: 1px solid rgba(183, 130, 120, 0.12);
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: 4.85rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(244, 221, 213, 0.95) 100%);
+  border-bottom: 1px solid rgba(183, 130, 120, 0.18);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transform: rotateX(0deg);
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  backface-visibility: hidden;
+  filter: drop-shadow(0 4px 8px rgba(201, 147, 147, 0.08));
+}
+
+.envelope-intro-opening .envelope-flap {
+  transform: rotateX(175deg);
+}
+
+.envelope-seal-wrap {
+  position: absolute;
+  top: 57%;
+  left: 50%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.62rem;
+  transform: translate(-50%, -50%);
+  transition:
+    opacity 0.45s ease,
+    transform 0.75s ease;
+}
+
+.envelope-seal {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.15rem;
+  height: 3.05rem;
+  border-radius: 49% 51% 48% 52% / 52% 48% 53% 47%;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.22) 0%, transparent 28%),
+    radial-gradient(circle at 72% 78%, rgba(35, 12, 18, 0.28) 0%, transparent 34%),
+    radial-gradient(circle at 50% 58%, #7a3040 0%, #5c2230 52%, #3f1620 100%);
+  border: 1px solid rgba(47, 18, 24, 0.35);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 230, 225, 0.18),
+    inset 0 -3px 8px rgba(25, 8, 12, 0.35),
+    0 10px 18px rgba(63, 22, 32, 0.28);
+}
+
+.envelope-seal-mark {
+  font-family: var(--font-brand), Georgia, "Times New Roman", serif;
+  font-size: 1.18rem;
+  font-style: italic;
+  font-weight: 600;
+  color: rgba(255, 244, 240, 0.92);
+  line-height: 1;
+  text-shadow: 0 1px 1px rgba(25, 8, 12, 0.35);
+}
+
+.envelope-seal-hint {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  line-height: 1.4;
+  color: #8f6860;
+}
+
+.envelope-intro-opening .envelope-seal-wrap {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+}
+
+@keyframes envelope-intro-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-0.35rem);
+  }
+}
+
+@media (min-width: 640px) {
+  .envelope-intro-envelope {
+    width: min(20.5rem, 82vw);
+  }
+
+  .envelope-body {
+    min-height: 11.75rem;
+  }
+
+  .envelope-seal {
+    width: 3.35rem;
+    height: 3.2rem;
+  }
+
+  .envelope-seal-mark {
+    font-size: 1.24rem;
+  }
+
+  .envelope-seal-hint {
+    font-size: 0.72rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .envelope-intro-card {
+    animation: none;
+  }
+
+  .envelope-flap,
+  .envelope-seal-wrap,
+  .envelope-paper,
+  .envelope-intro-bloom {
+    transition-duration: 0.01ms;
+  }
+
+  .envelope-intro-opening .envelope-flap {
+    transform: none;
+    opacity: 0;
+  }
+
+  .envelope-intro-opening .envelope-seal-wrap {
+    opacity: 0;
+  }
+
+  .envelope-intro-opening {
+    transition: opacity 0.28s ease;
+  }
+}
+
 /* ── Admin dashboard ── */
 .admin-page {
   position: relative;
